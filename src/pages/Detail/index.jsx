@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import { BASE_URL, BASE_URL_IMAGE } from '../../utils/requests'
 import styles from './index.module.css'
-import { BsStar } from 'react-icons/bs'
+import { BsStar, BsPlayCircle } from 'react-icons/bs'
 
 export default function Detail() {
   const { id } = useParams()
@@ -23,7 +23,12 @@ export default function Detail() {
   if (data) {
     return (
       <>
-        <div className={styles.bgWrapper}>
+        <div
+          className={styles.bgWrapper}
+          style={{
+            backgroundImage: `url(${BASE_URL_IMAGE + data?.backdrop_path})`,
+          }}
+        >
           <div className={styles.bgLayerWrapper}>
             <div className={styles.bgLayerContainer}>
               <h1 className={styles.title}>
@@ -48,11 +53,15 @@ export default function Detail() {
                   {Math.floor(data.vote_average)} / 10
                 </p>
               </div>
+
+              <button className={styles.btnWatchlist}>
+                <BsPlayCircle /> Watch Trailer
+              </button>
             </div>
           </div>
           <div
             style={{
-              background: 'rgba(0,0,0,0.5)',
+              background: 'rgba(0,0,0,0.48)',
               position: 'absolute',
               top: '0',
               left: '0',
@@ -60,10 +69,6 @@ export default function Detail() {
               width: '100%',
             }}
           ></div>
-          <img
-            src={BASE_URL_IMAGE + data?.backdrop_path}
-            className={styles.bgImg}
-          />
         </div>
       </>
     )
