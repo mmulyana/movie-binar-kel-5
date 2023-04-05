@@ -3,6 +3,8 @@ import useFetch from '../../hooks/useFetch'
 import { BASE_URL, BASE_URL_IMAGE } from '../../utils/requests'
 import styles from './index.module.css'
 import { BsStar, BsPlayCircle } from 'react-icons/bs'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function Detail() {
   const { id } = useParams()
@@ -11,14 +13,29 @@ export default function Detail() {
   )
 
   if (loading) {
-    return <p>loading</p>
+    return (
+      <div className={styles.bgWrapper}>
+        <div className={styles.bgLayerWrapper}>
+          <div className={styles.bgLayerContainer}>
+            <Skeleton />
+            <Skeleton count={5} />
+          </div>
+        </div>
+      </div>
+    )
   }
 
   if (error) {
-    return <p>error</p>
+    return (
+      <div className={styles.bgWrapper}>
+        <div className={styles.bgLayerWrapper}>
+          <div className={styles.bgLayerContainer}>
+            <p>error</p>
+          </div>
+        </div>
+      </div>
+    )
   }
-
-  console.log(data)
 
   if (data) {
     return (
