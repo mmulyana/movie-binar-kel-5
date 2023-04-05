@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { BsSearch } from 'react-icons/bs'
 import styles from './index.module.css'
 
 export default function Navbar() {
@@ -8,7 +9,7 @@ export default function Navbar() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    navigate(`/seach/${searchVal?.current}`)
+    navigate(`/search/${searchVal?.current.value}`)
   }
 
   return (
@@ -22,6 +23,18 @@ export default function Navbar() {
               placeholder='What do you want to watch'
               ref={searchVal}
             />
+            <span
+              style={{
+                color: 'white',
+                fontSize: '20px',
+                position: 'absolute',
+                top: '54%',
+                right: '1rem',
+                transform: 'translateY(-50%)',
+              }}
+            >
+              <BsSearch />
+            </span>
           </div>
           <button type='submit' hidden></button>
         </form>
