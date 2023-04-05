@@ -6,10 +6,10 @@ Membuat sebuah project menggunakan React.js yang berisi tampilan beserta routing
 
 ### Dev
 
-buat **env.local** dahulu
+buat **.env.local** dahulu
 
 ```
-TMDB_API=api_key
+VITE_API_KEY=api_key
 ```
 
 Run
