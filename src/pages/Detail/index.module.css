@@ -1,0 +1,81 @@
+.bgWrapper {
+  width: 100%;
+  height: fit-content;
+  position: relative;
+  height: 100%;
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.bgLayerWrapper {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.bgLayerContainer {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 12rem 0 4rem;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: white;
+}
+
+.genresWrapper {
+  padding-top: 1rem;
+  gap: 1rem;
+  display: flex;
+}
+
+.genres {
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 14px;
+  border: 0.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50px;
+}
+
+.overview {
+  padding-top: 1.2rem;
+  color: white;
+  line-height: 1.6rem;
+  font-size: 18px;
+  max-width: 40rem;
+}
+
+.star {
+  color: rgb(236, 221, 18);
+}
+
+.btnWatchlist {
+  padding: 1rem 1.4rem;
+  border-radius: 50px;
+  background-color: #e92929;
+  border: none;
+  margin-top: 1.2rem;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  transition: 70ms ease-in;
+}
+
+.btnWatchlist:hover {
+  box-shadow: 0px 6px 12px 0px rgba(233, 41, 41, 0.4);
+} 
+
+@media only screen and (max-width: 600px) {
+  .bgLayerContainer {
+    padding-inline: 1rem;
+  }
+}
