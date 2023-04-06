@@ -8,9 +8,7 @@ export default function MainRoutes() {
       <Route path="/" element={<BaseLayout />}>
         <Route index element={<Home />} />
         <Route path="search" element={<Search />} />
-        <Route path="detail">
-          <Route path=":id" element={<Detail />} />
-        </Route>
+        <Route path="detail/:id" element={<Detail />} />
       </Route>
     </Routes>
   )
