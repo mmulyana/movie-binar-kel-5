@@ -1,0 +1,102 @@
+.navWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 100;
+}
+
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #e92929;
+}
+
+.textfieldGroup {
+  position: relative;
+  padding: 2px;
+  border-radius: 50px;
+  border: 2px solid #e92929;
+  width: 400px;
+  height: 48px;
+}
+
+.textfield {
+  background-color: transparent;
+  color: white;
+  padding: 0 1rem;
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+}
+
+.textfield::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 0.8; /* Firefox */
+}
+
+.textfield:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: white;
+}
+
+.textfield::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: white;
+}
+
+.btnWrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btnLogin {
+  font-weight: 600;
+  padding: 12px 1.5rem;
+  cursor: pointer;
+  border: 1px solid #e92929;
+  color: #e92929;
+  background: transparent;
+  border-radius: 50px;
+  transition: 150ms ease-in;
+}
+
+.btnLogin:hover {
+  background-color: #e92929;
+  color: white;
+}
+
+.btnRegister {
+  font-weight: 600;
+  padding: 12px 1.5rem;
+  cursor: pointer;
+  border: 1px solid #e92929;
+  background-color: #e92929;
+  color: white;
+  border-radius: 50px;
+  transition: 150ms ease-in;
+}
+
+.btnRegister:hover {
+  border: 1px solid #b30000;
+  background-color: #b30000;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    padding-inline: 1rem;
+  }
+}
