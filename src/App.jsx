@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes } from 'react-router-dom'
 import MainRoutes from './routes/MainRoutes'
 
 function App() {
@@ -7,7 +7,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <MainRoutes />
+      <Routes>
+        <MainRoutes />
+      </Routes>
     </BrowserRouter>
   )
 }
