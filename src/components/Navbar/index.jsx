@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 import styles from './index.module.css'
+import MediaQuery from 'react-responsive'
 
 export default function Navbar() {
   const navigate = useNavigate()
   const searchVal = useRef()
 
   const [offset, setOffset] = useState(0)
+  const [isOpenSearch, setIsOpenSearch] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setOffset(window.pageYOffset)
@@ -21,36 +23,48 @@ export default function Navbar() {
     navigate(`/search/${searchVal?.current.value}`)
   }
 
+  function handleOpenSearch() {
+    setIsOpenSearch(!isOpenSearch)
+  }
+
   return (
     <div className={offset > 0 ? styles.navWrapperActive : styles.navWrapper}>
       <div className={styles.container}>
-        <h1 className={styles.brand}>Movielist</h1>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.textfieldGroup}>
-            <input
-              className={styles.textfield}
-              placeholder='What do you want to watch'
-              ref={searchVal}
-            />
-            <span
-              style={{
-                color: 'white',
-                fontSize: '20px',
-                position: 'absolute',
-                top: '54%',
-                right: '1rem',
-                transform: 'translateY(-50%)',
-              }}
-            >
-              <BsSearch />
-            </span>
+        <MediaQuery minWidth={786}>
+          <h1 className={styles.brand}>Movielist</h1>
+          <form onSubmit={handleSubmit}>
+            <div className={styles.textfieldGroup}>
+              <input
+                className={styles.textfield}
+                placeholder='What do you want to watch'
+                ref={searchVal}
+              />
+              <span
+                style={{
+                  color: 'white',
+                  fontSize: '20px',
+                  position: 'absolute',
+                  top: '54%',
+                  right: '1rem',
+                  transform: 'translateY(-50%)',
+                }}
+              >
+                <BsSearch />
+              </span>
+            </div>
+            <button type='submit' hidden></button>
+          </form>
+          <div className={styles.btnWrapper}>
+            <button className={styles.btnLogin}>Login</button>
+            <button className={styles.btnRegister}>Register</button>
           </div>
-          <button type='submit' hidden></button>
-        </form>
-        <div className={styles.btnWrapper}>
-          <button className={styles.btnLogin}>Login</button>
-          <button className={styles.btnRegister}>Register</button>
-        </div>
+        </MediaQuery>
+        <MediaQuery maxWidth={768}>
+          <h1 className={styles.brand}>Movielist</h1>
+          <button onClick={handleOpenSearch} className={styles.btnOpenSearch}>
+            <BsSearch />
+          </button>
+        </MediaQuery>
       </div>
     </div>
   )
