@@ -72,10 +72,25 @@
 
 .btnWatchlist:hover {
   box-shadow: 0px 6px 12px 0px rgba(233, 41, 41, 0.4);
-} 
+}
+
+.containerReviews {
+  margin-top: 2rem;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.avatarImg {
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
+  object-fit: fill;
+  object-position: center;
+}
 
 @media only screen and (max-width: 600px) {
-  .bgLayerContainer {
+  .bgLayerContainer,
+  .containerReviews {
     padding-inline: 1rem;
   }
 }

@@ -1,17 +1,19 @@
 import { useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
-import { BASE_URL, BASE_URL_IMAGE } from '../../utils/requests'
+import { BASE_URL, BASE_URL_IMAGE, getRequestURL } from '../../utils/requests'
 import styles from './index.module.css'
 import { BsStar, BsPlayCircle } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { BaseLayout } from '../../components'
 
+const GRAVATAR =
+  'https://www.gravatar.com/avatar/87b1f10dd7dae245ac84657537983336.jpg'
+
 export default function Detail() {
   const { id } = useParams()
-  const { data, loading, error } = useFetch(
-    `${BASE_URL}/movie/${id}?api_key=${import.meta.env.VITE_API_KEY}`,
-  )
+  const { data, loading, error } = useFetch(getRequestURL('detail', id))
+  const { data: dataReview } = useFetch(getRequestURL('review', id))
 
   if (loading) {
     return (
@@ -41,6 +43,8 @@ export default function Detail() {
       </BaseLayout>
     )
   }
+
+  console.log(dataReview)
 
   if (data) {
     return (
@@ -91,6 +95,29 @@ export default function Detail() {
               width: '100%',
             }}
           ></div>
+        </div>
+        <div className={styles.containerReviews}>
+          <p>Review of {data?.title}</p>
+          <ul>
+            {dataReview?.results?.map(
+              ({ author, author_details, content }, index) => (
+                <li key={index}>
+                  <p>{author}</p>
+                  <img
+                    src={
+                      author_details.avatar_path
+                        ? author_details.avatar_path?.includes('gravatar')
+                          ? author_details.avatar_path.substring(1)
+                          : `${BASE_URL_IMAGE}${author_details.avatar_path}`
+                        : GRAVATAR
+                    }
+                    className={styles.avatarImg}
+                  />
+                  <p>{content}</p>
+                </li>
+              ),
+            )}
+          </ul>
         </div>
       </BaseLayout>
     )
