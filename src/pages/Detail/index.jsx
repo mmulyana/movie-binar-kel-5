@@ -5,6 +5,7 @@ import styles from './index.module.css'
 import { BsStar, BsPlayCircle } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { BaseLayout } from '../../components'
 
 export default function Detail() {
   const { id } = useParams()
@@ -14,32 +15,36 @@ export default function Detail() {
 
   if (loading) {
     return (
-      <div className={styles.bgWrapper}>
-        <div className={styles.bgLayerWrapper}>
-          <div className={styles.bgLayerContainer}>
-            <Skeleton />
-            <Skeleton count={5} />
+      <BaseLayout>
+        <div className={styles.bgWrapper}>
+          <div className={styles.bgLayerWrapper}>
+            <div className={styles.bgLayerContainer}>
+              <Skeleton />
+              <Skeleton count={5} />
+            </div>
           </div>
         </div>
-      </div>
+      </BaseLayout>
     )
   }
 
   if (error) {
     return (
-      <div className={styles.bgWrapper}>
-        <div className={styles.bgLayerWrapper}>
-          <div className={styles.bgLayerContainer}>
-            <p>error</p>
+      <BaseLayout>
+        <div className={styles.bgWrapper}>
+          <div className={styles.bgLayerWrapper}>
+            <div className={styles.bgLayerContainer}>
+              <p>error</p>
+            </div>
           </div>
         </div>
-      </div>
+      </BaseLayout>
     )
   }
 
   if (data) {
     return (
-      <>
+      <BaseLayout>
         <div
           className={styles.bgWrapper}
           style={{
@@ -87,7 +92,7 @@ export default function Detail() {
             }}
           ></div>
         </div>
-      </>
+      </BaseLayout>
     )
   }
 }
