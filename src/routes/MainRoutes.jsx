@@ -5,7 +5,7 @@ import { Detail, Home, Search } from '../pages'
 export default function MainRoutes() {
   return (
     <Routes>
-      <Route element={<BaseLayout />}>
+      <Route path='/' element={<BaseLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/detail/:id" element={<Detail />} />
