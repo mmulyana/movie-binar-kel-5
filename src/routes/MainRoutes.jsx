@@ -7,7 +7,7 @@ export default function MainRoutes() {
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/search/:search' element={<Search />} />
-      <Route path='/detail/:id' element={<Detail />} />
+      <Route path='/detail/:idMovie' element={<Detail />} />
     </Routes>
   )
 }
