@@ -8,9 +8,9 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import BaseLayout from '../../components/Layout/BaseLayout'
 
 export default function Detail() {
-  const { id } = useParams()
+  const { idMovie } = useParams()
   const { data, loading, error } = useFetch(
-    `${BASE_URL}/movie/${id}?api_key=${import.meta.env.VITE_API_KEY}`,
+    `${BASE_URL}/movie/${idMovie}?api_key=${import.meta.env.VITE_API_KEY}`,
   )
 
   if (loading) {
