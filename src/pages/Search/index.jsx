@@ -1,7 +1,6 @@
 import React from 'react'
+import { BaseLayout } from '../../components'
 
 export default function Search() {
-  return (
-    <div>Search</div>
-  )
+  return <BaseLayout>Search</BaseLayout>
 }
