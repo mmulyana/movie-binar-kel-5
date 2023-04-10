@@ -6,6 +6,7 @@ import { BsStar, BsPlayCircle, BsStarFill } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { BaseLayout } from '../../components'
+import { useEffect, useState } from 'react'
 
 const GRAVATAR =
   'https://www.gravatar.com/avatar/87b1f10dd7dae245ac84657537983336.jpg'
@@ -21,8 +22,8 @@ export default function Detail() {
         <div className={styles.bgWrapper}>
           <div className={styles.bgLayerWrapper}>
             <div className={styles.bgLayerContainer}>
-              <Skeleton />
-              <Skeleton count={5} />
+              <Skeleton style={{height: '80px', marginBottom:'8px'}}/>
+              <Skeleton count={3} className={{marginTop: '10px'}} />
             </div>
           </div>
         </div>
@@ -43,8 +44,6 @@ export default function Detail() {
       </BaseLayout>
     )
   }
-
-  console.log(dataReview)
 
   if (data) {
     return (
@@ -104,7 +103,7 @@ export default function Detail() {
             Review of {data?.title}
           </p>
           <div className={styles.reviewWrapper}>
-            {dataReview.results && dataReview.results.length > 10
+            {dataReview?.results && dataReview.results.length > 10
               ? dataReview.results
                   .slice(0, 5)
                   .map(({ author, author_details, content }, index) => (
