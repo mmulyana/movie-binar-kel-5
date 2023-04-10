@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import { BASE_URL, BASE_URL_IMAGE, getRequestURL } from '../../utils/requests'
 import styles from './index.module.css'
-import { BsStar, BsPlayCircle } from 'react-icons/bs'
+import { BsStar, BsPlayCircle, BsStarFill } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { BaseLayout } from '../../components'
@@ -64,11 +64,12 @@ export default function Detail() {
                 {data.tagline && data.tagline}
               </p>
               <div className={styles.genresWrapper}>
-                {data?.genres.map(({ id, name }) => (
-                  <span key={id} className={styles.genres}>
-                    {name}
-                  </span>
-                ))}
+                {data.genres &&
+                  data.genres.map(({ id, name }) => (
+                    <span key={id} className={styles.genres}>
+                      {name}
+                    </span>
+                  ))}
               </div>
               <p className={styles.overview}>{data?.overview}</p>
               <div style={{ paddingTop: '1rem', display: 'flex', gap: '10px' }}>
@@ -97,27 +98,64 @@ export default function Detail() {
           ></div>
         </div>
         <div className={styles.containerReviews}>
-          <p>Review of {data?.title}</p>
-          <ul>
-            {dataReview?.results?.map(
-              ({ author, author_details, content }, index) => (
-                <li key={index}>
-                  <p>{author}</p>
-                  <img
-                    src={
-                      author_details.avatar_path
-                        ? author_details.avatar_path?.includes('gravatar')
-                          ? author_details.avatar_path.substring(1)
-                          : `${BASE_URL_IMAGE}${author_details.avatar_path}`
-                        : GRAVATAR
-                    }
-                    className={styles.avatarImg}
-                  />
-                  <p>{content}</p>
-                </li>
-              ),
-            )}
-          </ul>
+          <p
+            style={{ marginTop: '1.5rem', fontSize: '1.2rem', fontWeight: 600 }}
+          >
+            Review of {data?.title}
+          </p>
+          <div className={styles.reviewWrapper}>
+            {dataReview.results && dataReview.results.length > 10
+              ? dataReview.results
+                  .slice(0, 5)
+                  .map(({ author, author_details, content }, index) => (
+                    <div className={styles.reviewBox} key={index}>
+                      <div className={styles.reviewBoxLeft}>
+                        <img
+                          src={
+                            author_details.avatar_path
+                              ? author_details.avatar_path?.includes('gravatar')
+                                ? author_details.avatar_path.substring(1)
+                                : `${BASE_URL_IMAGE}${author_details.avatar_path}`
+                              : GRAVATAR
+                          }
+                          className={styles.avatarImg}
+                        />
+                        <div>
+                          <p style={{fontSize: '18px', fontWeight: '700'}}>{author}</p>
+                          <div style={{display:'flex', gap: '8px', alignItems: 'items-center', marginTop: '4px'}}>
+                            <span style={{color: '#474E68'}}>{author_details.rating}</span>
+                            <span style={{color: '#FFD93D'}}>
+                            <BsStarFill />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.reviewBoxRight}>
+                        <p>{content}</p>
+                      </div>
+                    </div>
+                  ))
+              : ({ author, author_details, content }, index) => (
+                  <div className={styles.reviewBox} key={index}>
+                    <div className={styles.reviewBoxLeft}>
+                      <img
+                        src={
+                          author_details.avatar_path
+                            ? author_details.avatar_path?.includes('gravatar')
+                              ? author_details.avatar_path.substring(1)
+                              : `${BASE_URL_IMAGE}${author_details.avatar_path}`
+                            : GRAVATAR
+                        }
+                        className={styles.avatarImg}
+                      />
+                      <p>{author}</p>
+                    </div>
+                    <div className={styles.reviewBoxRight}>
+                      <p>{content}</p>
+                    </div>
+                  </div>
+                )}
+          </div>
         </div>
       </BaseLayout>
     )
