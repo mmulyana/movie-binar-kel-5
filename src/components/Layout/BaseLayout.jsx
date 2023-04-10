@@ -1,16 +1,10 @@
-import React from 'react'
-
-import { Outlet } from 'react-router-dom'
-import styles from './BaseLayout.module.css'
 import Navbar from '../Navbar'
 
-export default function BaseLayout() {
+export default function BaseLayout({ children }) {
   return (
     <>
       <Navbar />
-      <div className={styles.bodyWrapper}>
-        <Outlet />
-      </div>
+      <main>{children}</main>
     </>
   )
 }
