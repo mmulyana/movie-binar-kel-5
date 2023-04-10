@@ -5,11 +5,11 @@ import { Detail, Home, Search } from '../pages'
 export default function MainRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<BaseLayout />}>
+      <Route path='/' element={<BaseLayout />}>
         <Route index element={<Home />} />
-        <Route path="search" element={<Search />} />
-        <Route path="detail">
-          <Route path=":id" element={<Detail />} />
+        <Route path='search' element={<Search />} />
+        <Route path='detail'>
+          <Route path=':id' element={<Detail />} />
         </Route>
       </Route>
     </Routes>

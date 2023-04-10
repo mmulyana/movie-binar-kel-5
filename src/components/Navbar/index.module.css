@@ -17,9 +17,11 @@
 }
 
 .brand {
+  font-style: Verdana;
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 750;
   color: #e92929;
+  text-shadow: 3px 3px black;
 }
 
 .textfieldGroup {
