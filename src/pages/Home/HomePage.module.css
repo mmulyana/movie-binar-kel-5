@@ -3,3 +3,32 @@
   height: 36rem;
   object-fit: cover;
 }
+
+.cardMovieWrapper {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.cardItem {
+  height: 320px;
+  flex: 1;
+  border-radius: 20px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.cardBody {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+}
+
+
+@media (max-width: 800px) {
+  .cardMovieWrapper {
+    flex-direction: column;
+  }
+}
