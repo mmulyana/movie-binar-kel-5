@@ -14,7 +14,9 @@ function HomePage() {
   if (!data) {
     return (
       <BaseLayout>
-        <Skeleton style={{ height: '800px' }} />
+        <div className='container'>
+          <Skeleton style={{ height: '80px', marginTop: '80px', width: '100%' }} />
+        </div>
       </BaseLayout>
     )
   }
@@ -28,7 +30,7 @@ function HomePage() {
         style={{ height: '80vh', zIndex: '11' }}
       >
         {data.results.slice(0, 3).map((data, index) => (
-          <Carousel.Item key={index} style={{ height: '80vh' }}  interval={4000} >
+          <Carousel.Item key={index} style={{ height: '80vh' }} interval={4000}>
             <img
               style={{
                 objectFit: 'cover',
