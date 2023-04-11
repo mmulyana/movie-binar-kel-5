@@ -15,6 +15,8 @@ function getRequestURL(type, id) {
       return `${BASE_URL}/movie/${id}?api_key=${import.meta.env.VITE_API_KEY}`
     case 'videos':
       return `${BASE_URL}/movie/${id}/videos?api_key=${import.meta.env.VITE_API_KEY}`
+    case 'upcoming':
+      return `${BASE_URL}/movie/upcoming?api_key=${import.meta.env.VITE_API_KEY}`
     default:
       return false
   }

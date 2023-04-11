@@ -16,14 +16,14 @@ export default function Detail() {
   const { data, loading, error } = useFetch(getRequestURL('detail', id))
   const { data: dataReview } = useFetch(getRequestURL('review', id))
 
-  if (loading) {
+  if (!data) {
     return (
       <BaseLayout>
         <div className={styles.bgWrapper}>
           <div className={styles.bgLayerWrapper}>
             <div className={styles.bgLayerContainer}>
-              <Skeleton style={{height: '80px', marginBottom:'8px'}}/>
-              <Skeleton count={3} className={{marginTop: '10px'}} />
+              <Skeleton style={{ height: '80px', marginBottom: '8px' }} />
+              <Skeleton count={3} className={{ marginTop: '10px' }} />
             </div>
           </div>
         </div>
@@ -45,9 +45,9 @@ export default function Detail() {
     )
   }
 
-  if (data) {
-    return (
-      <BaseLayout>
+  return (
+    <BaseLayout>
+      <div>
         <div
           className={styles.bgWrapper}
           style={{
@@ -56,9 +56,7 @@ export default function Detail() {
         >
           <div className={styles.bgLayerWrapper}>
             <div className={styles.bgLayerContainer}>
-              <h1 className={styles.title}>
-                {data.original_title ? data.original_title : null}
-              </h1>
+              <h1 className={styles.title}>{data.title}</h1>
               <p style={{ paddingTop: '10px', color: 'white' }}>
                 {data.tagline && data.tagline}
               </p>
@@ -103,7 +101,7 @@ export default function Detail() {
             Review of {data?.title}
           </p>
           <div className={styles.reviewWrapper}>
-            {dataReview?.results && dataReview.results.length > 10
+            {dataReview && dataReview.results && dataReview.results.length > 10
               ? dataReview.results
                   .slice(0, 5)
                   .map(({ author, author_details, content }, index) => (
@@ -120,11 +118,22 @@ export default function Detail() {
                           className={styles.avatarImg}
                         />
                         <div>
-                          <p style={{fontSize: '18px', fontWeight: '700'}}>{author}</p>
-                          <div style={{display:'flex', gap: '8px', alignItems: 'items-center', marginTop: '4px'}}>
-                            <span style={{color: '#474E68'}}>{author_details.rating}</span>
-                            <span style={{color: '#FFD93D'}}>
-                            <BsStarFill />
+                          <p style={{ fontSize: '18px', fontWeight: '700' }}>
+                            {author}
+                          </p>
+                          <div
+                            style={{
+                              display: 'flex',
+                              gap: '8px',
+                              alignItems: 'items-center',
+                              marginTop: '4px',
+                            }}
+                          >
+                            <span style={{ color: '#474E68' }}>
+                              {author_details.rating}
+                            </span>
+                            <span style={{ color: '#FFD93D' }}>
+                              <BsStarFill />
                             </span>
                           </div>
                         </div>
@@ -156,7 +165,7 @@ export default function Detail() {
                 )}
           </div>
         </div>
-      </BaseLayout>
-    )
-  }
+      </div>
+    </BaseLayout>
+  )
 }

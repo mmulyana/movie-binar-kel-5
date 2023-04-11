@@ -1,0 +1,34 @@
+.HomeImg {
+  width: 100%;
+  height: 36rem;
+  object-fit: cover;
+}
+
+.moviesWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.btnAllMovies {
+  color: #e92929;
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btnAllMovies:hover {
+  color: #b30000;
+}
+
+.btnIcon {
+  margin-top: -2px;
+}
+
+.moviesSectionTitle {
+  font-size: 1.4rem;
+}

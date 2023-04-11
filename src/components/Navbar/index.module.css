@@ -28,8 +28,9 @@
 }
 
 .brand {
+  font-style: Verdana;
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 750;
   color: #e92929;
 }
 

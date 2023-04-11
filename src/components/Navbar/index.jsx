@@ -33,20 +33,28 @@ export default function Navbar() {
         <MediaQuery minWidth={786}>
           <h1 className={styles.brand}>Movielist</h1>
           <form onSubmit={handleSubmit}>
-            <div className={styles.textfieldGroup}>
+            <div
+              className={styles.textfieldGroup}
+              style={{ paddingBottom: '4px' }}
+            >
               <input
                 className={styles.textfield}
                 placeholder='What do you want to watch'
                 ref={searchVal}
               />
               <span
+                onClick={handleSubmit}
                 style={{
                   color: 'white',
                   fontSize: '20px',
                   position: 'absolute',
-                  top: '54%',
+                  top: '50%',
                   right: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   transform: 'translateY(-50%)',
+                  cursor: 'pointer',
                 }}
               >
                 <BsSearch />
@@ -55,8 +63,28 @@ export default function Navbar() {
             <button type='submit' hidden></button>
           </form>
           <div className={styles.btnWrapper}>
-            <button className={styles.btnLogin}>Login</button>
-            <button className={styles.btnRegister}>Register</button>
+            <button
+              style={{
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              className={styles.btnLogin}
+            >
+              Login
+            </button>
+            <button
+              style={{
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              className={styles.btnRegister}
+            >
+              Register
+            </button>
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={768}>
