@@ -15,7 +15,9 @@ function HomePage() {
     return (
       <BaseLayout>
         <div className='container'>
-          <Skeleton style={{ height: '80px', marginTop: '80px', width: '100%' }} />
+          <Skeleton
+            style={{ height: '80px', marginTop: '80px', width: '100%' }}
+          />
         </div>
       </BaseLayout>
     )
@@ -23,11 +25,7 @@ function HomePage() {
 
   return (
     <BaseLayout>
-      <Carousel
-        controls={false}
-        fade
-        style={{ height: '80vh', zIndex: '11' }}
-      >
+      <Carousel controls={false} fade style={{ height: '80vh', zIndex: '11' }}>
         {data.results.slice(0, 3).map((data, index) => (
           <Carousel.Item key={index} style={{ height: '80vh' }} interval={4500}>
             <img
@@ -38,7 +36,6 @@ function HomePage() {
                 position: 'absolute',
                 left: '0',
                 top: '0',
-                width: '100%',
               }}
               src={BASE_URL_IMAGE + data?.backdrop_path}
             />
@@ -82,7 +79,6 @@ function HomePage() {
                 </h3>
                 <p
                   style={{
-                    color: 'white',
                     maxWidth: '800px',
                     color: 'rgba(255,255,255,0.8)',
                   }}

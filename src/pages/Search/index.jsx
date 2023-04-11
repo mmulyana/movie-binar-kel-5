@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { BASE_URL } from '../../utils/requests'
 
@@ -41,7 +41,7 @@ function Search() {
   return (
     <div style={{ paddingTop: `80px` }}>
       <h1>Search Movies</h1>
-      {movies.map((movie) => (
+      {movies?.map((movie) => (
         <div key={movie.id}>
           <h2>{movie.title}</h2>
           <div key={movie.id}>
