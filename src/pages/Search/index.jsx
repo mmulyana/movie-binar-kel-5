@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { BASE_URL } from '../../utils/requests'
+import { BaseLayout } from '../../components'
 
 function Search() {
   const { search } = useParams()
@@ -39,22 +40,24 @@ function Search() {
   }
 
   return (
-    <div style={{ paddingTop: `80px` }}>
-      <h1>Search Movies</h1>
-      {movies?.map((movie) => (
-        <div key={movie.id}>
-          <h2>{movie.title}</h2>
+    <BaseLayout>
+      <div style={{ paddingTop: `80px` }}>
+        <h1>Search Movies</h1>
+        {movies?.map((movie) => (
           <div key={movie.id}>
-            <img
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              alt={movie.title}
-            />
             <h2>{movie.title}</h2>
+            <div key={movie.id}>
+              <img
+                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                alt={movie.title}
+              />
+              <h2>{movie.title}</h2>
+            </div>
+            <p>{movie.overview}</p>
           </div>
-          <p>{movie.overview}</p>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </BaseLayout>
   )
 }
 
