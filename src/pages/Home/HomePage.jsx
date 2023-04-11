@@ -24,13 +24,12 @@ function HomePage() {
   return (
     <BaseLayout>
       <Carousel
-        draggable={true}
-        fade
         controls={false}
+        fade
         style={{ height: '80vh', zIndex: '11' }}
       >
         {data.results.slice(0, 3).map((data, index) => (
-          <Carousel.Item key={index} style={{ height: '80vh' }} interval={4000}>
+          <Carousel.Item key={index} style={{ height: '80vh' }} interval={4500}>
             <img
               style={{
                 objectFit: 'cover',
