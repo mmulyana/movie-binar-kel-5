@@ -13,7 +13,7 @@ import { useEffect } from 'react'
 
 export default function Detail() {
   const { id } = useParams()
-  const { data } = useFetch(getRequestURL('detail', id))
+  const { data, loading } = useFetch(getRequestURL('detail', id))
   const { data: dataReview } = useFetch(getRequestURL('review', id))
   const { data: dataRecommendations } = useFetch(
     getRequestURL('recommendations', id),
@@ -23,7 +23,7 @@ export default function Detail() {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }, [id])
 
-  if (!data) {
+  if (loading) {
     return (
       <BaseLayout>
         <div className={styles.bgWrapper}>
@@ -37,6 +37,8 @@ export default function Detail() {
       </BaseLayout>
     )
   }
+
+
 
   return (
     <BaseLayout>
