@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { BASE_URL, BASE_URL_IMAGE } from '../../utils/requests'
 import { BaseLayout } from '../../components'
 import styles from './index.module.css'
+import Card from '../../components/Card'
 
 function Search() {
   const { search } = useParams()
@@ -40,41 +41,18 @@ function Search() {
     return <div>{errorMessage}</div>
   }
 
-  console.log(movies)
-
   return (
     <BaseLayout isLight>
       <div className='container' style={{ paddingTop: `80px` }}>
         <h3 className={styles.title}>Search Movies "{search}"</h3>
         <div className={styles.movieWrapperSearch}>
           {movies?.map((movie) => (
-            <div
-              key={movie.id}
-              className={styles.cardItem}
-              style={{
-                backgroundImage: `url(${BASE_URL_IMAGE + filterImage(movie)})`,
-              }}
-              alt={movie.title}
-            >
-              <div className='cardBody'>
-                <Link className='cardTitle' to={`/detail/${movie.id}`}>
-                  {movie.title}
-                </Link>
-              </div>
-            </div>
+            <Card data={movie} key={movie.id} />
           ))}
         </div>
       </div>
     </BaseLayout>
   )
-}
-
-function filterImage(movie) {
-  if (movie.backdrop_path !== null) {
-    return movie.backdrop_path
-  } else {
-    return movie.poster_path
-  }
 }
 
 export default Search
