@@ -1,12 +1,18 @@
 .footerWrapper {
-    background-color: #18141d;
+  background-color: #18141d;
 }
 
 .footerContainer {
-    max-width: 1200px;
-    margin-inline: auto;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  height: 48px;
+  max-width: 1200px;
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.link {
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: -2px;
 }

@@ -32,6 +32,11 @@
   font-size: 2rem;
   font-weight: 750;
   color: #e92929;
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: #e92929;
 }
 
 .textfieldGroup {
