@@ -42,26 +42,21 @@ export default function Navbar({ isLight }) {
                   isLight && offset > 0
                     ? styles.textfieldDarkActive
                     : isLight
-                    ? styles.textfieldDark
-                    : styles.textfield
+                      ? styles.textfieldDark
+                      : styles.textfield
                 }
-                Gaceholder='What do you want to watch'
+                placeholder='What do you want to watch'
                 ref={searchVal}
               />
               <span
                 onClick={handleSubmit}
-                style={{
-                  color: 'white',
-                  fontSize: '20px',
-                  position: 'absolute',
-                  top: '50%',
-                  right: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transform: 'translateY(-50%)',
-                  cursor: 'pointer',
-                }}
+                className={
+                  isLight && offset > 0
+                    ? styles.iconDarkActice
+                    : isLight
+                      ? styles.iconDark
+                      : styles.iconLight
+                }
               >
                 <BsSearch />
               </span>

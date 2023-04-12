@@ -53,6 +53,35 @@
   height: 100%;
 }
 
+.iconDarkActice,
+.iconLight {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: white;
+}
+
+.iconDark {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #100e13;
+}
+
 .textfield,
 .textfieldDarkActive {
   background-color: transparent;
@@ -78,6 +107,21 @@
 .textfield::-ms-input-placeholder {
   /* Microsoft Edge */
   color: white;
+}
+
+.textfieldDark::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #100e13;
+}
+
+.textfieldDark:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #100e13;
+}
+
+.textfieldDark::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #100e13;
 }
 
 .btnWrapper {
