@@ -1,10 +1,10 @@
 import Navbar from '../Navbar'
 import styles from './BaseLayout.module.css'
 
-export default function BaseLayout({ children }) {
+export default function BaseLayout({ children, isLight }) {
   return (
     <>
-      <Navbar />
+      <Navbar isLight={isLight}/>
       <main className={styles.bodyWrapper}>{children}</main>
     </>
   )

@@ -1,0 +1,20 @@
+.movieWrapperSearch {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-auto-rows: auto;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cardItem {
+  height: 320px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.title {
+    font-size: 24px;
+    margin-top: 0.5rem;
+}

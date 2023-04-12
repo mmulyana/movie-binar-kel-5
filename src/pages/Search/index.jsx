@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { BASE_URL } from '../../utils/requests'
+import { Link, useParams } from 'react-router-dom'
+import { BASE_URL, BASE_URL_IMAGE } from '../../utils/requests'
 import { BaseLayout } from '../../components'
+import styles from './index.module.css'
 
 function Search() {
   const { search } = useParams()
@@ -39,26 +40,41 @@ function Search() {
     return <div>{errorMessage}</div>
   }
 
+  console.log(movies)
+
   return (
-    <BaseLayout>
-      <div style={{ paddingTop: `80px` }}>
-        <h1>Search Movies</h1>
-        {movies?.map((movie) => (
-          <div key={movie.id}>
-            <h2>{movie.title}</h2>
-            <div key={movie.id}>
-              <img
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                alt={movie.title}
-              />
-              <h2>{movie.title}</h2>
+    <BaseLayout isLight>
+      <div className='container' style={{ paddingTop: `80px` }}>
+        <h3 className={styles.title}>Search Movies "{search}"</h3>
+        <div className={styles.movieWrapperSearch}>
+          {movies?.map((movie) => (
+            <div
+              key={movie.id}
+              className={styles.cardItem}
+              style={{
+                backgroundImage: `url(${BASE_URL_IMAGE + filterImage(movie)})`,
+              }}
+              alt={movie.title}
+            >
+              <div className='cardBody'>
+                <Link className='cardTitle' to={`/detail/${movie.id}`}>
+                  {movie.title}
+                </Link>
+              </div>
             </div>
-            <p>{movie.overview}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </BaseLayout>
   )
+}
+
+function filterImage(movie) {
+  if (movie.backdrop_path !== null) {
+    return movie.backdrop_path
+  } else {
+    return movie.poster_path
+  }
 }
 
 export default Search
