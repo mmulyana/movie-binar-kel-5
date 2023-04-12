@@ -16,18 +16,3 @@ body {
   max-width: 1220px;
   margin-inline: auto;
 }
-
-.cardMovieWrapper {
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
-}
-
-@media (max-width: 800px) {
-  .cardMovieWrapper {
-    flex-direction: column;
-  }
-  .cardItem {
-    flex: auto;
-  }
-}

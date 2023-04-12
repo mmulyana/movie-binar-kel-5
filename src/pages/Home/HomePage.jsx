@@ -36,7 +36,7 @@ function HomePage() {
             <div className={styles.layerCarousel}></div>
             <div className={styles.containerCarousel}>
               <div className={styles.containerInnerCarousel}>
-                <h3 className={styles.titleCarousel}>{data.title}</h3>
+                <Link to={`/detail/${data.id}`} className={styles.titleCarousel}>{data.title}</Link>
                 <p className={styles.overviewCarousel}>{data.overview}</p>
               </div>
             </div>
@@ -54,7 +54,7 @@ function HomePage() {
             </span>
           </Link>
         </div>
-        <div className='cardMovieWrapper'>
+        <div className={styles.container}>
           {data.results.slice(0, 5).map((data, index) => (
             <Card data={data} key={index} />
           ))}

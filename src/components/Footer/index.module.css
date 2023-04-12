@@ -16,3 +16,9 @@
   color: rgba(255, 255, 255, 0.8);
   margin-top: -2px;
 }
+
+@media only screen and (max-width: 600px) {
+  .footerContainer {
+    padding-inline: 1rem;
+  }
+}
