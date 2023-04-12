@@ -5,7 +5,7 @@ export default function MainRoutes() {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/search/:param' element={<Search />} />
+      <Route path='/search/:search' element={<Search />} />
       <Route path='/detail/:id' element={<Detail />} />
     </Routes>
   )

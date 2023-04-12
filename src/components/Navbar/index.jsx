@@ -4,7 +4,7 @@ import { BsSearch } from 'react-icons/bs'
 import styles from './index.module.css'
 import MediaQuery from 'react-responsive'
 
-export default function Navbar() {
+export default function Navbar({ isLight }) {
   const navigate = useNavigate()
   const searchVal = useRef()
 
@@ -38,24 +38,25 @@ export default function Navbar() {
               style={{ paddingBottom: '4px' }}
             >
               <input
-                className={styles.textfield}
+                className={
+                  isLight && offset > 0
+                    ? styles.textfieldDarkActive
+                    : isLight
+                      ? styles.textfieldDark
+                      : styles.textfield
+                }
                 placeholder='What do you want to watch'
                 ref={searchVal}
               />
               <span
                 onClick={handleSubmit}
-                style={{
-                  color: 'white',
-                  fontSize: '20px',
-                  position: 'absolute',
-                  top: '50%',
-                  right: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transform: 'translateY(-50%)',
-                  cursor: 'pointer',
-                }}
+                className={
+                  isLight && offset > 0
+                    ? styles.iconDarkActice
+                    : isLight
+                      ? styles.iconDark
+                      : styles.iconLight
+                }
               >
                 <BsSearch />
               </span>
