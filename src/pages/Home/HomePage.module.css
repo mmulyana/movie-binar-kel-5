@@ -32,3 +32,48 @@
 .moviesSectionTitle {
   font-size: 1.4rem;
 }
+
+.imageCarousel {
+  object-fit: cover;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.layerCarousel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+}
+
+.containerCarousel {
+  max-width: 1200px;
+  margin-inline: center;
+  height: 100%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.containerInnerCarousel {
+  position: absolute;
+  top: 40%;
+  transform: translateY(0);
+}
+
+.titleCarousel {
+  text-align: left;
+  color: white;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.overviewCarousel {
+  max-width: 800px;
+  color: rgba(255, 255, 255, 0.8);
+}

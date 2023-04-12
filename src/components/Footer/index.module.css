@@ -1,0 +1,12 @@
+.footerWrapper {
+    background-color: #18141d;
+}
+
+.footerContainer {
+    max-width: 1200px;
+    margin-inline: auto;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
