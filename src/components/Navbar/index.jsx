@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 import styles from './index.module.css'
 import MediaQuery from 'react-responsive'
@@ -32,7 +32,9 @@ export default function Navbar({ isLight }) {
     <div className={offset > 0 ? styles.navWrapperActive : styles.navWrapper}>
       <div className={styles.container}>
         <MediaQuery minWidth={786}>
-          <h1 className={styles.brand}>Movielist</h1>
+          <Link to='/' className={styles.brand}>
+            Movielist
+          </Link>
           <form onSubmit={handleSubmit}>
             <div
               className={styles.textfieldGroup}
@@ -91,9 +93,18 @@ export default function Navbar({ isLight }) {
         </MediaQuery>
         <MediaQuery maxWidth={768}>
           <h1 className={styles.brand}>Movielist</h1>
-          <button onClick={handleOpenSearch} className={styles.btnOpenSearch}>
+          <span
+            onClick={handleOpenSearch}
+            className={
+              isLight && offset > 0
+                ? styles.iconDarkActice
+                : isLight
+                ? styles.iconDark
+                : styles.iconLight
+            }
+          >
             <BsSearch />
-          </button>
+          </span>
         </MediaQuery>
       </div>
     </div>
