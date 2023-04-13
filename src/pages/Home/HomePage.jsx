@@ -10,7 +10,7 @@ import useFetch from '../../hooks/useFetch'
 
 function HomePage() {
   const { data } = useFetch(getRequestURL('upcoming'))
-  const { data: dataPopular } = useFetch(getRequestURL('trending'))
+  const { data: dataPopular } = useFetch(getRequestURL('popular'))
 
   console.log(dataPopular)
 
