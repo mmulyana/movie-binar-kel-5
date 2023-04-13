@@ -5,16 +5,37 @@ import styles from './index.module.css'
 import { BsStar, BsPlayCircle, BsStarFill } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { BaseLayout } from '../../components'
+import { BaseLayout, Modal } from '../../components'
+import imgOops from '../../assets/images/oops.png'
+import Review from '../../components/Review'
+import Card from '../../components/Card'
 import { useEffect, useState } from 'react'
-
-const GRAVATAR =
-  'https://www.gravatar.com/avatar/87b1f10dd7dae245ac84657537983336.jpg'
 
 export default function Detail() {
   const { id } = useParams()
   const { data, loading, error } = useFetch(getRequestURL('detail', id))
   const { data: dataReview } = useFetch(getRequestURL('review', id))
+  const { data: dataRecommendations } = useFetch(getRequestURL('recommendations', id))
+
+  const [video, setVideo] = useState(null)
+  const [isOpenModal, setIsOpenModal] = useState(false)
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }, [id])
+
+  async function getMovieVideo() {
+    const res = await fetch()
+    const data = await res.json()
+
+    setVideo(data.results.filter((res) => res.site === 'Youtube' && res.type === 'Trailer')[0])
+    setIsOpenModal(true)
+  }
+
+  function closeModal () {
+    setIsOpenModal(false)
+    setVideo(null)
+  }
 
   if (loading) {
     return (
@@ -31,28 +52,12 @@ export default function Detail() {
     )
   }
 
-  if (error) {
-    return (
-      <BaseLayout>
-        <div className={styles.bgWrapper}>
-          <div className={styles.bgLayerWrapper}>
-            <div className={styles.bgLayerContainer}>
-              <p>error</p>
-            </div>
-          </div>
-        </div>
-      </BaseLayout>
-    )
-  }
-
-  if (data) {
-    return (
-      <BaseLayout>
+  return (
+    <BaseLayout>
+      <div>
         <div
           className={styles.bgWrapper}
-          style={{
-            backgroundImage: `url(${BASE_URL_IMAGE + data?.backdrop_path})`,
-          }}
+          style={{ backgroundImage: `url(${BASE_URL_IMAGE + filterImage(data)})` }}
         >
           <div className={styles.bgLayerWrapper}>
             <div className={styles.bgLayerContainer}>
@@ -80,7 +85,7 @@ export default function Detail() {
                 </p>
               </div>
 
-              <button className={styles.btnWatchlist}>
+              <button className={styles.btnWatchlist} onClick={getMovieVideo}>
                 <BsPlayCircle /> Watch Trailer
               </button>
             </div>
@@ -156,7 +161,27 @@ export default function Detail() {
                 )}
           </div>
         </div>
-      </BaseLayout>
-    )
+
+        <div className={styles.container}>
+          <p className={styles.titleContainer}>Recommendation</p>
+          <div className={styles.movieWrapper}>
+            {dataRecommendations &&
+              dataRecommendations.results
+                .slice(0, 4)
+                .map((data, index) => <Card key={index} data={data} />)}
+          </div>
+        </div>
+      </div>
+      
+      {isOpenModal && <Modal data={video} onclose={closeModal}/>}
+    </BaseLayout>
+  )
+}
+
+function filterImage(movie) {
+  if (movie.backdrop_path !== null) {
+    return movie.backdrop_path
+  } else {
+    return movie.poster_path
   }
 }
