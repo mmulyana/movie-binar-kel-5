@@ -20,7 +20,8 @@ export default function Navbar({ isLight }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    navigate(`/search/${searchVal?.current.value}`)
+    const searchValue = searchVal?.current.value
+    navigate(`/search?query=${searchValue}`)
   }
 
   function handleOpenSearch() {
@@ -42,8 +43,8 @@ export default function Navbar({ isLight }) {
                   isLight && offset > 0
                     ? styles.textfieldDarkActive
                     : isLight
-                      ? styles.textfieldDark
-                      : styles.textfield
+                    ? styles.textfieldDark
+                    : styles.textfield
                 }
                 placeholder='What do you want to watch'
                 ref={searchVal}
@@ -54,8 +55,8 @@ export default function Navbar({ isLight }) {
                   isLight && offset > 0
                     ? styles.iconDarkActice
                     : isLight
-                      ? styles.iconDark
-                      : styles.iconLight
+                    ? styles.iconDark
+                    : styles.iconLight
                 }
               >
                 <BsSearch />

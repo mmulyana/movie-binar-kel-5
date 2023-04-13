@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { BASE_URL, BASE_URL_IMAGE } from '../../utils/requests'
 import { BaseLayout } from '../../components'
 import styles from './index.module.css'
 
 function Search() {
-  const { search } = useParams()
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const search = queryParams.get('query')
   const [movies, setMovies] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
