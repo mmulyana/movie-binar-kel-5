@@ -1,10 +1,13 @@
+import Footer from '../Footer'
 import Navbar from '../Navbar'
+import styles from './BaseLayout.module.css'
 
-export default function BaseLayout({ children }) {
+export default function BaseLayout({ children, isLight }) {
   return (
     <>
-      <Navbar />
-      <main>{children}</main>
+      <Navbar isLight={isLight}/>
+      <main className={styles.bodyWrapper}>{children}</main>
+      <Footer/>
     </>
   )
 }
