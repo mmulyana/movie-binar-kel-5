@@ -20,7 +20,8 @@ export default function Navbar({ isLight }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    navigate(`/search/${searchVal?.current.value}`)
+    const searchValue = searchVal?.current.value
+    navigate(`/search?query=${searchValue}`)
   }
 
   function handleOpenSearch() {

@@ -36,7 +36,12 @@ function HomePage() {
             <div className={styles.layerCarousel}></div>
             <div className={styles.containerCarousel}>
               <div className={styles.containerInnerCarousel}>
-                <Link to={`/detail/${data.id}`} className={styles.titleCarousel}>{data.title}</Link>
+                <Link
+                  to={`/detail/${data.id}`}
+                  className={styles.titleCarousel}
+                >
+                  {data.title}
+                </Link>
                 <p className={styles.overviewCarousel}>{data.overview}</p>
               </div>
             </div>
