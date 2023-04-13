@@ -5,23 +5,37 @@ import styles from './index.module.css'
 import { BsStar, BsPlayCircle } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { BaseLayout } from '../../components'
+import { BaseLayout, Modal } from '../../components'
 import imgOops from '../../assets/images/oops.png'
 import Review from '../../components/Review'
 import Card from '../../components/Card'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { filterImage } from '../../utils'
 
 export default function Detail() {
   const { id } = useParams()
   const { data, loading } = useFetch(getRequestURL('detail', id))
   const { data: dataReview } = useFetch(getRequestURL('review', id))
-  const { data: dataRecommendations } = useFetch(
-    getRequestURL('recommendations', id),
-  )
+  const { data: dataRecommendations } = useFetch(getRequestURL('recommendations', id))
+
+  const [video, setVideo] = useState(null)
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }, [id])
+
+  async function getMovieVideo() {
+    const res = await fetch(getRequestURL('videos', id))
+    const data = await res.json()
+    setVideo(data.results)
+    setIsOpenModal(true)
+  }
+
+  function closeModal() {
+    setIsOpenModal(false)
+    setVideo(null)
+  }
 
   if (loading) {
     return (
@@ -38,16 +52,12 @@ export default function Detail() {
     )
   }
 
-
-
   return (
     <BaseLayout>
       <div>
         <div
           className={styles.bgWrapper}
-          style={{
-            backgroundImage: `url(${BASE_URL_IMAGE + filterImage(data)})`,
-          }}
+          style={{ backgroundImage: `url(${BASE_URL_IMAGE + filterImage(data)})` }}
         >
           <div className={styles.bgLayerWrapper}>
             <div className={styles.bgLayerContainer}>
@@ -58,11 +68,12 @@ export default function Detail() {
               </p>
 
               <div className={styles.genresWrapper}>
-                {data?.genres.map(({ id, name }) => (
-                  <span key={id} className={styles.genres}>
-                    {name}
-                  </span>
-                ))}
+                {data.genres &&
+                  data.genres.map(({ id, name }) => (
+                    <span key={id} className={styles.genres}>
+                      {name}
+                    </span>
+                  ))}
               </div>
 
               <p className={styles.overview}>{data?.overview}</p>
@@ -76,7 +87,7 @@ export default function Detail() {
                 </p>
               </div>
 
-              <button className={styles.btnWatchlist}>
+              <button className={styles.btnWatchlist} onClick={getMovieVideo}>
                 <BsPlayCircle /> Watch Trailer
               </button>
             </div>
@@ -116,22 +127,8 @@ export default function Detail() {
           </div>
         </div>
       </div>
+      
+      {isOpenModal && <Modal data={video} onclose={closeModal}/>}
     </BaseLayout>
   )
-}
-
-function filterImage(movie) {
-  if (movie.backdrop_path !== null) {
-    return movie.backdrop_path
-  } else {
-    return movie.poster_path
-  }
-}
-
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 3,
 }

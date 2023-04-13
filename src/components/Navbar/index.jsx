@@ -28,6 +28,10 @@ export default function Navbar({ isLight }) {
     setIsOpenSearch(!isOpenSearch)
   }
 
+  function handleOpenSearch() {
+    setIsOpenSearch(!isOpenSearch)
+  }
+
   return (
     <div className={offset > 0 ? styles.navWrapperActive : styles.navWrapper}>
       <div className={styles.container}>

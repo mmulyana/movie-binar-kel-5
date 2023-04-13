@@ -29,6 +29,7 @@
   padding: 1.4rem 2rem 3rem;
   background-color: white;
   border-radius: 12px;
+  height: fit-content;
 }
 
 .reviewBoxLeft {
