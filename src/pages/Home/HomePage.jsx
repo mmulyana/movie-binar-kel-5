@@ -10,12 +10,17 @@ import useFetch from '../../hooks/useFetch'
 
 function HomePage() {
   const { data } = useFetch(getRequestURL('upcoming'))
+  const { data: dataPopular } = useFetch(getRequestURL('trending'))
+
+  console.log(dataPopular)
 
   if (!data) {
     return (
       <BaseLayout>
         <div className='container'>
-          <Skeleton style={{ height: '80px', marginTop: '80px', width: '100%' }} />
+          <Skeleton
+            style={{ height: '80px', marginTop: '80px', width: '100%' }}
+          />
         </div>
       </BaseLayout>
     )
@@ -23,11 +28,7 @@ function HomePage() {
 
   return (
     <BaseLayout>
-      <Carousel
-        controls={false}
-        fade
-        style={{ height: '80vh', zIndex: '11' }}
-      >
+      <Carousel controls={false} fade style={{ height: '80vh', zIndex: '11' }}>
         {data.results.slice(0, 3).map((data, index) => (
           <Carousel.Item key={index} style={{ height: '80vh' }} interval={4500}>
             <img
@@ -125,5 +126,4 @@ function HomePage() {
     </BaseLayout>
   )
 }
-
 export default HomePage
