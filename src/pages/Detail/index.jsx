@@ -28,7 +28,7 @@ export default function Detail() {
   async function getMovieVideo() {
     const res = await fetch(getRequestURL('videos', id))
     const data = await res.json()
-    setVideo(data.results.slice(0, 3))
+    setVideo(data.results)
     setIsOpenModal(true)
   }
 
