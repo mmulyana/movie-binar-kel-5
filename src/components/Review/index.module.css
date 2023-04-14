@@ -1,0 +1,51 @@
+.avatarImg {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  object-fit: fit;
+  object-position: center;
+}
+
+.reviewWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  margin-top: 1rem;
+}
+
+.rating {
+  display: flex;
+  gap: 8px;
+  align-items: items-center;
+  margin-top: 4px;
+}
+
+.reviewBox {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: start;
+  padding: 1.4rem 2rem 3rem;
+  background-color: white;
+  border-radius: 12px;
+  height: fit-content;
+}
+
+.reviewBoxLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-basis: 120px;
+  flex-grow: 1;
+}
+
+.reviewBoxRight {
+  flex: 10;
+}
+
+@media screen and (max-width: 480px) {
+  .reviewBox {
+    flex-direction: column;
+  }
+}

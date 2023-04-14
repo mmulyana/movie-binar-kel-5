@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 import styles from './index.module.css'
 import MediaQuery from 'react-responsive'
 
-export default function Navbar() {
+export default function Navbar({ isLight }) {
   const navigate = useNavigate()
   const searchVal = useRef()
 
@@ -20,7 +20,12 @@ export default function Navbar() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    navigate(`/search/${searchVal?.current.value}`)
+    const searchValue = searchVal?.current.value
+    navigate(`/search?query=${searchValue}`)
+  }
+
+  function handleOpenSearch() {
+    setIsOpenSearch(!isOpenSearch)
   }
 
   function handleOpenSearch() {
@@ -31,31 +36,34 @@ export default function Navbar() {
     <div className={offset > 0 ? styles.navWrapperActive : styles.navWrapper}>
       <div className={styles.container}>
         <MediaQuery minWidth={786}>
-          <h1 className={styles.brand}>Movielist</h1>
+          <Link to='/' className={styles.brand}>
+            Movielist
+          </Link>
           <form onSubmit={handleSubmit}>
             <div
               className={styles.textfieldGroup}
               style={{ paddingBottom: '4px' }}
             >
               <input
-                className={styles.textfield}
+                className={
+                  isLight && offset > 0
+                    ? styles.textfieldDarkActive
+                    : isLight
+                    ? styles.textfieldDark
+                    : styles.textfield
+                }
                 placeholder='What do you want to watch'
                 ref={searchVal}
               />
               <span
                 onClick={handleSubmit}
-                style={{
-                  color: 'white',
-                  fontSize: '20px',
-                  position: 'absolute',
-                  top: '50%',
-                  right: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transform: 'translateY(-50%)',
-                  cursor: 'pointer',
-                }}
+                className={
+                  isLight && offset > 0
+                    ? styles.iconDarkActice
+                    : isLight
+                    ? styles.iconDark
+                    : styles.iconLight
+                }
               >
                 <BsSearch />
               </span>
@@ -89,9 +97,18 @@ export default function Navbar() {
         </MediaQuery>
         <MediaQuery maxWidth={768}>
           <h1 className={styles.brand}>Movielist</h1>
-          <button onClick={handleOpenSearch} className={styles.btnOpenSearch}>
+          <span
+            onClick={handleOpenSearch}
+            className={
+              isLight && offset > 0
+                ? styles.iconDarkActice
+                : isLight
+                ? styles.iconDark
+                : styles.iconLight
+            }
+          >
             <BsSearch />
-          </button>
+          </span>
         </MediaQuery>
       </div>
     </div>
