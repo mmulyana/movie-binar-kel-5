@@ -37,7 +37,7 @@ export default function Detail() {
     setVideo(null)
   }
 
-  if (loading) {
+  if (!data) {
     return (
       <BaseLayout>
         <div className={styles.bgWrapper}>
@@ -62,7 +62,6 @@ export default function Detail() {
           <div className={styles.bgLayerWrapper}>
             <div className={styles.bgLayerContainer}>
               <h1 className={styles.title}>{data.title}</h1>
-
               <p style={{ paddingTop: '10px', color: 'white' }}>
                 {data.tagline && data.tagline}
               </p>
