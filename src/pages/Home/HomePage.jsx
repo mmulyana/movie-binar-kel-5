@@ -97,7 +97,7 @@ function HomePage() {
       </Carousel>
       <div className='container'>
         <div className={styles.moviesWrapper}>
-          <h2 className={styles.moviesSectionTitle}>Popular Movie</h2>
+          <h2 className={styles.moviesSectionTitle}>Upcoming</h2>
           <Link to='/upcoming' className={styles.btnAllMovies}>
             See All Movie
             <span className={styles.btnIcon}>
@@ -117,6 +117,36 @@ function HomePage() {
               <div className='cardBody'>
                 <Link className='cardTitle' to={`/detail/${data.id}`}>
                   {data.title}
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className='container'>
+        <div className={styles.moviesWrapper}>
+          <h2 className={styles.moviesSectionTitle}>Trending</h2>
+          <Link to='/popular' className={styles.btnAllMovies}>
+            See All Movie
+            <span className={styles.btnIcon}>
+              <AiOutlineArrowRight />
+            </span>
+          </Link>
+        </div>
+        <div className='cardMovieWrapper'>
+          {dataPopular.results.slice(0, 5).map((dataPopular, index) => (
+            <div
+              key={index}
+              className='cardItem'
+              style={{
+                backgroundImage: `url(${
+                  BASE_URL_IMAGE + dataPopular?.backdrop_path
+                })`,
+              }}
+            >
+              <div className='cardBody'>
+                <Link className='cardTitle' to={`/detail/${dataPopular.id}`}>
+                  {dataPopular.title}
                 </Link>
               </div>
             </div>
