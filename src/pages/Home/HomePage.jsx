@@ -60,7 +60,7 @@ function HomePage() {
           </Link>
         </div>
         <div className={styles.container}>
-          {data.results.slice(0, 5).map((data, index) => (
+          {data?.results.slice(0, 5).map((data, index) => (
             <Card data={data} key={index} />
           ))}
         </div>
@@ -78,7 +78,7 @@ function HomePage() {
         </div>
 
         <div className={styles.container}>
-          {dataPopular.results.slice(0, 5).map((data, index) => (
+          {dataPopular?.results.slice(0, 5).map((data, index) => (
             <Card data={data} key={index} />
           ))}
         </div>
