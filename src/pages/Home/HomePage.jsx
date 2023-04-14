@@ -7,6 +7,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai'
 import Skeleton from 'react-loading-skeleton'
 import { BaseLayout } from '../../components'
 import useFetch from '../../hooks/useFetch'
+import Card from '../../components/Card'
 
 function HomePage() {
   const { data } = useFetch(getRequestURL('upcoming'))
@@ -64,6 +65,7 @@ function HomePage() {
           ))}
         </div>
       </div>
+
       <div className='container'>
         <div className={styles.moviesWrapper}>
           <h2 className={styles.moviesSectionTitle}>Popular</h2>
@@ -75,9 +77,9 @@ function HomePage() {
           </Link>
         </div>
 
-        <div className='cardMovieWrapper'>
+        <div className={styles.container}>
           {dataPopular.results.slice(0, 5).map((dataPopular, index) => (
-            <Card data={data} key={index} />
+            <Card data={dataPopular} key={index} />
           ))}
         </div>
       </div>
