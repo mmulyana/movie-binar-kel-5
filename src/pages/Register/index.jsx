@@ -1,4 +1,7 @@
+import axios from 'axios'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import * as yup from 'yup'
 
@@ -15,13 +18,13 @@ const schema = yup.object().shape({
 })
 
 export default function Register() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    passwordConfirmation: ''
+    passwordConfirmation: '',
   })
-
   const [errors, setErrors] = useState({})
 
   function handleChange(e) {
@@ -38,7 +41,7 @@ export default function Register() {
     try {
       await schema.validate(formData, { abortEarly: false })
       setErrors({})
-      console.log(formData)
+      handleRegister(formData)
     } catch (errors) {
       // validation failed, display error messages
       const errorMessages = {}
@@ -47,6 +50,41 @@ export default function Register() {
       })
       console.log(errorMessages)
       setErrors(errorMessages)
+    }
+  }
+
+  async function handleRegister(form) {
+    console.log('register')
+    try {
+      const { name, email, password } = form
+      let data = {
+        name,
+        email,
+        password,
+      }
+
+      console.log(data)
+
+      let config = {
+        method: 'post',
+        url: `${import.meta.env.VITE_API_URL}/v1/auth/register`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: data,
+      }
+
+      const response = await axios.request(config)
+      const { token } = response.data.data
+      localStorage.setItem('token', token)
+
+      navigate('/')
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response.data.message)
+        return
+      }
+      toast.error(error.message)
     }
   }
 
@@ -80,7 +118,9 @@ export default function Register() {
           value={formData.passwordConfirmation}
           onChange={handleChange}
         />
-        {errors.passwordConfirmation && <p className='error'>{errors.passwordConfirmation}</p>}
+        {errors.passwordConfirmation && (
+          <p className='error'>{errors.passwordConfirmation}</p>
+        )}
         <button type='submit'>Register</button>
       </form>
     </div>
