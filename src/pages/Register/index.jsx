@@ -2,20 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-
-import * as yup from 'yup'
-
-const schema = yup.object().shape({
-  name: yup.string().required('name is required'),
-  email: yup.string().email('Email is required').required('email is required'),
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters long'),
-  passwordConfirmation: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match'),
-})
+import { loginSchema } from '../../utils/schema'
 
 export default function Register() {
   const navigate = useNavigate()
@@ -39,7 +26,7 @@ export default function Register() {
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      await schema.validate(formData, { abortEarly: false })
+      await loginSchema.validate(formData, { abortEarly: false })
       setErrors({})
       handleRegister(formData)
     } catch (errors) {
@@ -54,7 +41,6 @@ export default function Register() {
   }
 
   async function handleRegister(form) {
-    console.log('register')
     try {
       const { name, email, password } = form
       let data = {
@@ -62,8 +48,6 @@ export default function Register() {
         email,
         password,
       }
-
-      console.log(data)
 
       let config = {
         method: 'post',
@@ -76,7 +60,9 @@ export default function Register() {
 
       const response = await axios.request(config)
       const { token } = response.data.data
+
       localStorage.setItem('token', token)
+      toast.success('Your account has been created successfully!')
 
       navigate('/')
     } catch (error) {
