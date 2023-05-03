@@ -90,6 +90,7 @@ export default function Navbar({ isLight }) {
                 justifyContent: 'center',
               }}
               className={styles.btnRegister}
+              onClick={() => navigate('/register')}
             >
               Register
             </button>
