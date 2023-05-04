@@ -65,7 +65,6 @@ function HomePage() {
           ))}
         </div>
       </div>
-
       <div className='container'>
         <div className={styles.moviesWrapper}>
           <h2 className={styles.moviesSectionTitle}>Popular</h2>
@@ -78,8 +77,8 @@ function HomePage() {
         </div>
 
         <div className={styles.container}>
-          {dataPopular.results.slice(0, 5).map((dataPopular, index) => (
-            <Card data={dataPopular} key={index} />
+          {dataPopular.results.slice(0, 5).map((data, index) => (
+            <Card data={data} key={index} />
           ))}
         </div>
       </div>
