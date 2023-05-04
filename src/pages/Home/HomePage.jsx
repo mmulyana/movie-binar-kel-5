@@ -65,7 +65,6 @@ function HomePage() {
           ))}
         </div>
       </div>
-      
       <div className='container'>
         <div className={styles.moviesWrapper}>
           <h2 className={styles.moviesSectionTitle}>Popular</h2>
