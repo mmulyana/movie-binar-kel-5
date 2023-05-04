@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { loginSchema } from '../../utils/schema'
+import { GoogleLogin } from '@react-oauth/google'
 
 export default function Register() {
   const navigate = useNavigate()
@@ -109,6 +110,7 @@ export default function Register() {
         )}
         <button type='submit'>Register</button>
       </form>
+      <GoogleLogin buttonText='LogIn By Google' />
     </div>
   )
 }
