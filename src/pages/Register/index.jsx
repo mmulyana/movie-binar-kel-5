@@ -23,7 +23,10 @@ export default function Register() {
       [name]: value,
     }))
   }
-
+  function responseGoogle(response) {
+    console.log(response)
+    // handle the Google login response here
+  }
   async function handleSubmit(e) {
     e.preventDefault()
     try {
@@ -110,7 +113,12 @@ export default function Register() {
         )}
         <button type='submit'>Register</button>
       </form>
-      <GoogleLogin buttonText='LogIn By Google' />
+      <GoogleLogin
+        buttonText='LogIn By Google'
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy='single_host_origin'
+      />
     </div>
   )
 }
