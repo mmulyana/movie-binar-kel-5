@@ -28,11 +28,6 @@ export default function Register() {
     }))
   }
 
-  function responseGoogle(response) {
-    console.log(response)
-    registerLoginWithGoogleAction(response.credential)
-  }
-
   async function handleSubmit(e) {
     e.preventDefault()
     try {
@@ -108,7 +103,7 @@ export default function Register() {
             style={{
               width: '30px',
               height: '40px',
-              background: '#f5f5f5',
+              background: '#fff',
               position: 'absolute',
               left: '50%',
               top: '50%',
@@ -184,7 +179,7 @@ export default function Register() {
             )}
           </div>
           <button type='submit' className={styles.btn}>
-            Register
+            Sign Up
           </button>
         </form>
       </div>

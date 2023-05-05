@@ -57,7 +57,7 @@ const styleBtn = {
   height: '44px',
   width: '100%',
   border: '1px solid #9e9e9e',
-  background: '#f5f5f5',
+  background: '#fff',
   fontSize: '14px',
   marginBottom: '1rem',
   display: 'flex',

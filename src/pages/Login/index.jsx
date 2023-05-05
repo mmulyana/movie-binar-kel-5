@@ -3,6 +3,11 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { loginSchema } from '../../utils/schema'
+import { AuthLayout } from '../../components/Layout'
+import GoogleLogin from '../../components/GoogleLogin'
+import googleIcon from '../../assets/images/google.png'
+
+import styles from './index.module.css'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -72,25 +77,75 @@ export default function Login() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='email'
-          name='email'
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {errors.email && <p className='error'>{errors.email}</p>}
-        <input
-          type='password'
-          name='password'
-          value={formData.password}
-          onChange={handleChange}
-        />
-        {errors.password && <p className='error'>{errors.password}</p>}
+    <AuthLayout>
+      <div className={styles.wrapper}>
+        <h1
+          style={{
+            fontSize: '22px',
+            textAlign: 'center',
+            marginBottom: '20px',
+          }}
+        >
+          Welcome back
+        </h1>
 
-        <button type='submit'>Login</button>
-      </form>
-    </div>
+        <GoogleLogin>
+          <img src={googleIcon} style={{ height: '20px', objectFit: 'fit' }} />
+          Sign in with Google
+        </GoogleLogin>
+
+        <div style={{ position: 'relative' }}>
+          <hr style={{ color: '#878484' }} />
+          <div
+            style={{
+              width: '30px',
+              height: '40px',
+              background: '#fff',
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%,-50%)',
+              display: 'flex',
+              alignContent: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <p style={{ paddingTop: '6px' }}>or</p>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className={styles.textfieldgroup}>
+            <label htmlFor='name'>
+              Name <span>*</span>
+            </label>
+            <input
+              type='email'
+              name='email'
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {errors.email && <p className='error'>{errors.email}</p>}
+          </div>
+
+          <div className={styles.textfieldgroup}>
+            <label htmlFor='name'>
+              Name <span>*</span>
+            </label>
+            <input
+              type='password'
+              name='password'
+              value={formData.password}
+              onChange={handleChange}
+            />
+            {errors.password && <p className='error'>{errors.password}</p>}
+          </div>
+
+          <button type='submit' className={styles.btn}>
+            Sign In
+          </button>
+        </form>
+      </div>
+    </AuthLayout>
   )
 }
