@@ -1,0 +1,51 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.textfieldgroup {
+  position: relative;
+  height: fit;
+  margin-bottom: 1.8rem;
+}
+
+.textfieldgroup input {
+  height: 100%;
+  width: 100%;
+  height: 40px;
+  border-radius: 80px;
+  background-color: #fff;
+  border: 1px solid #9e9e9e;
+  padding-inline: 1rem;
+  font-size: 14px;
+}
+
+.textfieldgroup label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #18141d;
+  padding-left: 4px;
+  margin-bottom: 8px;
+}
+.textfieldgroup label span {
+  color: red;
+}
+
+.error {
+  position: absolute;
+  bottom: -40px;
+  color: red;
+  font-size: 13px;
+  padding-left: 4px;
+}
+
+.btn {
+  margin-top: 1.4rem;
+  width: 100%;
+  border-radius: 80px;
+  height: 48px;
+  background-color: #18141d;
+  border: none;
+  color: white;
+}

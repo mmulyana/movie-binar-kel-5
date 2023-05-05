@@ -7,6 +7,7 @@ import MediaQuery from 'react-responsive'
 export default function Navbar({ isLight }) {
   const navigate = useNavigate()
   const searchVal = useRef()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const [offset, setOffset] = useState(0)
   const [isOpenSearch, setIsOpenSearch] = useState(false)
@@ -17,6 +18,19 @@ export default function Navbar({ isLight }) {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+
+    if (token) {
+      setIsAuthenticated(true)
+    }
+  }, [])
+
+  function logout() {
+    localStorage.clear('token')
+    navigate('/login')
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -70,7 +84,7 @@ export default function Navbar({ isLight }) {
             </div>
             <button type='submit' hidden></button>
           </form>
-          <div className={styles.btnWrapper}>
+          {isAuthenticated ? (
             <button
               style={{
                 height: '40px',
@@ -79,21 +93,38 @@ export default function Navbar({ isLight }) {
                 justifyContent: 'center',
               }}
               className={styles.btnLogin}
+              onClick={logout}
             >
-              Login
+              Logout
             </button>
-            <button
-              style={{
-                height: '40px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              className={styles.btnRegister}
-            >
-              Register
-            </button>
-          </div>
+          ) : (
+            <div className={styles.btnWrapper}>
+              <button
+                style={{
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                className={styles.btnLogin}
+                onClick={() => navigate('/login')}
+              >
+                Login
+              </button>
+              <button
+                style={{
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                className={styles.btnRegister}
+                onClick={() => navigate('/register')}
+              >
+                Register
+              </button>
+            </div>
+          )}
         </MediaQuery>
         <MediaQuery maxWidth={768}>
           <h1 className={styles.brand}>Movielist</h1>
