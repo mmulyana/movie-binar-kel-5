@@ -2,8 +2,12 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { loginSchema } from '../../utils/schema'
-import { GoogleLogin } from '@react-oauth/google'
+import { registerSchema } from '../../utils/schema'
+import { registerLoginWithGoogleAction } from '../../utils'
+import GoogleLogin from '../../components/GoogleLogin'
+import styles from './index.module.css'
+import AuthLayout from '../../components/Layout/AuthLayout'
+import googleIcon from '../../assets/images/google.png'
 
 export default function Register() {
   const navigate = useNavigate()
@@ -23,14 +27,16 @@ export default function Register() {
       [name]: value,
     }))
   }
+
   function responseGoogle(response) {
     console.log(response)
-    // handle the Google login response here
+    registerLoginWithGoogleAction(response.credential)
   }
+
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      await loginSchema.validate(formData, { abortEarly: false })
+      await registerSchema.validate(formData, { abortEarly: false })
       setErrors({})
       handleRegister(formData)
     } catch (errors) {
@@ -79,46 +85,109 @@ export default function Register() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          name='name'
-          value={formData.name}
-          onChange={handleChange}
-        />
-        {errors.name && <p className='error'>{errors.name}</p>}
-        <input
-          type='email'
-          name='email'
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {errors.email && <p className='error'>{errors.email}</p>}
-        <input
-          type='password'
-          name='password'
-          value={formData.password}
-          onChange={handleChange}
-        />
-        {errors.password && <p className='error'>{errors.password}</p>}
-        <input
-          type='password'
-          name='passwordConfirmation'
-          value={formData.passwordConfirmation}
-          onChange={handleChange}
-        />
-        {errors.passwordConfirmation && (
-          <p className='error'>{errors.passwordConfirmation}</p>
-        )}
-        <button type='submit'>Register</button>
-      </form>
-      <GoogleLogin
-        buttonText='LogIn By Google'
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy='single_host_origin'
-      />
-    </div>
+    <AuthLayout>
+      <div className={styles.wrapper}>
+        <h1
+          style={{
+            fontSize: '22px',
+            textAlign: 'center',
+            marginBottom: '20px',
+          }}
+        >
+          Create your account
+        </h1>
+
+        <GoogleLogin>
+          <img src={googleIcon} style={{ height: '20px', objectFit: 'fit' }} />
+          Sign in with Google
+        </GoogleLogin>
+
+        <div style={{ position: 'relative' }}>
+          <hr style={{ color: '#878484' }} />
+          <div
+            style={{
+              width: '30px',
+              height: '40px',
+              background: '#f5f5f5',
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%,-50%)',
+              display: 'flex',
+              alignContent: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <p style={{ paddingTop: '6px' }}>or</p>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className={styles.textfieldgroup}>
+            <label htmlFor='name'>
+              Name <span>*</span>
+            </label>
+            <input
+              id='name'
+              type='text'
+              name='name'
+              placeholder='Enter name here'
+              value={formData.name}
+              onChange={handleChange}
+            />
+            {errors.name && <p className={styles.error}>{errors.name}</p>}
+          </div>
+          <div className={styles.textfieldgroup}>
+            <label htmlFor='email'>
+              Email <span>*</span>
+            </label>
+            <input
+              type='email'
+              name='email'
+              id='emal'
+              placeholder='Enter email here'
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {errors.email && <p className={styles.error}>{errors.email}</p>}
+          </div>
+          <div className={styles.textfieldgroup}>
+            <label>
+              Password <span>*</span>
+            </label>
+            <input
+              type='password'
+              name='password'
+              id='password'
+              placeholder='Password'
+              value={formData.password}
+              onChange={handleChange}
+            />
+            {errors.password && (
+              <p className={styles.error}>{errors.password}</p>
+            )}
+          </div>
+          <div className={styles.textfieldgroup}>
+            <label>
+              Confirm password <span>*</span>
+            </label>
+            <input
+              type='password'
+              id='password'
+              name='passwordConfirmation'
+              placeholder='Confirm password'
+              value={formData.passwordConfirmation}
+              onChange={handleChange}
+            />
+            {errors.passwordConfirmation && (
+              <p className={styles.error}>{errors.passwordConfirmation}</p>
+            )}
+          </div>
+          <button type='submit' className={styles.btn}>
+            Register
+          </button>
+        </form>
+      </div>
+    </AuthLayout>
   )
 }

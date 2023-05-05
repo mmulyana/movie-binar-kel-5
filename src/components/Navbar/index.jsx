@@ -79,6 +79,7 @@ export default function Navbar({ isLight }) {
                 justifyContent: 'center',
               }}
               className={styles.btnLogin}
+              onClick={() => navigate('/login')}
             >
               Login
             </button>
