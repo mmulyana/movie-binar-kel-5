@@ -31,7 +31,7 @@ export default function Detail() {
 
   useEffect(() => {
     if (checkAuth()) {
-      navigate('/login')
+      navigate('/login', { replace: true })
     }
   }, [])
 

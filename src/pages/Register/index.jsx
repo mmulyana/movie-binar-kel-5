@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { registerSchema } from '../../utils/schema'
 import GoogleLogin from '../../components/GoogleLogin'
 import styles from './index.module.css'
 import AuthLayout from '../../components/Layout/AuthLayout'
 import googleIcon from '../../assets/images/google.png'
+import { parseJwt } from '../../utils'
 
 export default function Register() {
   const navigate = useNavigate()
@@ -65,8 +66,10 @@ export default function Register() {
       const response = await axios.request(config)
       const { token } = response.data.data
 
+      const { name: nameUser } = parseJwt(token)
+
       localStorage.setItem('token', token)
-      toast.success('Your account has been created successfully!')
+      toast.success(`Hi ${nameUser}! Thanks for signing up`)
 
       navigate('/')
     } catch (error) {
@@ -93,7 +96,7 @@ export default function Register() {
 
         <GoogleLogin>
           <img src={googleIcon} style={{ height: '20px', objectFit: 'fit' }} />
-          Sign in with Google
+          Sign up with Google
         </GoogleLogin>
 
         <div style={{ position: 'relative' }}>
@@ -181,6 +184,9 @@ export default function Register() {
             Sign Up
           </button>
         </form>
+        <p style={{textAlign: 'center', marginTop: '8px'}}>
+          Already have an account? <Link style={{textDecoration: 'none', fontWeight: '600'}} to='/login'>Sign in</Link>
+        </p>
       </div>
     </AuthLayout>
   )

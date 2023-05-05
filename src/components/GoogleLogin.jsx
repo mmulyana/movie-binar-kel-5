@@ -3,6 +3,7 @@ import { useGoogleLogin } from '@react-oauth/google'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { parseJwt } from '../utils'
 
 function GoogleLogin({ children }) {
   const navigate = useNavigate()
@@ -24,9 +25,12 @@ function GoogleLogin({ children }) {
 
       const response = await axios.request(config)
       const { token } = response.data.data
-      console.log(token)
+      const { name } = parseJwt(token)
 
       localStorage.setItem('token', token)
+
+      toast.success(`Welcome! ${name}`)
+
       navigate('/')
     } catch (error) {
       if (axios.isAxiosError(error)) {
