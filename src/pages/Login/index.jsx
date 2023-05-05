@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { loginSchema } from '../../utils/schema'
 import { AuthLayout } from '../../components/Layout'
@@ -8,6 +8,7 @@ import GoogleLogin from '../../components/GoogleLogin'
 import googleIcon from '../../assets/images/google.png'
 
 import styles from './index.module.css'
+import { parseJwt } from '../../utils'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -62,9 +63,10 @@ export default function Login() {
 
       const response = await axios.request(config)
       const { token } = response.data.data
+      const { name } = parseJwt(token)
 
       localStorage.setItem('token', token)
-      toast.success('Welcome back!')
+      toast.success(`Welcome back! ${name}`)
 
       navigate('/')
     } catch (error) {
@@ -145,6 +147,9 @@ export default function Login() {
             Sign In
           </button>
         </form>
+        <p style={{textAlign: 'center', marginTop: '8px'}}>
+          Don't have account? <Link style={{textDecoration: 'none', fontWeight: '600'}} to='/register'>Sign Up</Link>
+        </p>
       </div>
     </AuthLayout>
   )

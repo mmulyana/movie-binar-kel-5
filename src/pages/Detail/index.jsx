@@ -16,9 +16,7 @@ export default function Detail() {
   const { id } = useParams()
   const { data, loading } = useFetch(getRequestURL('detail', id))
   const { data: dataReview } = useFetch(getRequestURL('review', id))
-  const { data: dataRecommendations } = useFetch(
-    getRequestURL('recommendations', id),
-  )
+  const { data: dataRecommendations } = useFetch(getRequestURL('recommendations', id))
 
   const navigate = useNavigate()
 
@@ -31,7 +29,7 @@ export default function Detail() {
 
   useEffect(() => {
     if (checkAuth()) {
-      navigate('/login')
+      navigate('/login', { replace: true })
     }
   }, [])
 
