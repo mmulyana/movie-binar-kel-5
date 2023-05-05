@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import { BASE_URL_IMAGE, getRequestURL } from '../../utils/requests'
 import styles from './index.module.css'
@@ -10,13 +10,17 @@ import imgOops from '../../assets/images/oops.png'
 import Review from '../../components/Review'
 import Card from '../../components/Card'
 import { useEffect, useState } from 'react'
-import { filterImage } from '../../utils'
+import { checkAuth, filterImage } from '../../utils'
 
 export default function Detail() {
   const { id } = useParams()
   const { data, loading } = useFetch(getRequestURL('detail', id))
   const { data: dataReview } = useFetch(getRequestURL('review', id))
-  const { data: dataRecommendations } = useFetch(getRequestURL('recommendations', id))
+  const { data: dataRecommendations } = useFetch(
+    getRequestURL('recommendations', id),
+  )
+
+  const navigate = useNavigate()
 
   const [video, setVideo] = useState(null)
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -24,6 +28,12 @@ export default function Detail() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }, [id])
+
+  useEffect(() => {
+    if (checkAuth()) {
+      navigate('/login')
+    }
+  }, [])
 
   async function getMovieVideo() {
     const res = await fetch(getRequestURL('videos', id))
@@ -57,7 +67,9 @@ export default function Detail() {
       <div>
         <div
           className={styles.bgWrapper}
-          style={{ backgroundImage: `url(${BASE_URL_IMAGE + filterImage(data)})` }}
+          style={{
+            backgroundImage: `url(${BASE_URL_IMAGE + filterImage(data)})`,
+          }}
         >
           <div className={styles.bgLayerWrapper}>
             <div className={styles.bgLayerContainer}>
@@ -126,8 +138,8 @@ export default function Detail() {
           </div>
         </div>
       </div>
-      
-      {isOpenModal && <Modal data={video} onclose={closeModal}/>}
+
+      {isOpenModal && <Modal data={video} onclose={closeModal} />}
     </BaseLayout>
   )
 }

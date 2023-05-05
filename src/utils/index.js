@@ -9,38 +9,14 @@ function filterImage(movie) {
   }
 }
 
-const registerLoginWithGoogleAction = async (accessToken) => {
-  try {
-    let data = JSON.stringify({
-      access_token: accessToken,
-    })
+function checkAuth() {
+  const token = localStorage.getItem('token')
 
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: `${import.meta.env.VITE_API_URL}/v1/auth/google`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: data,
-    }
-
-    const response = await axios.request(config)
-    const { token } = response.data.data
-
-    localStorage.setItem('token', token)
-    console.log('success')
-
-    toast.success('Your account has been created successfully!')
-
-    window.location.href = '/'
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      toast.error(error.response.data.message)
-      return
-    }
-    toast.error(error.message)
+  if (token) {
+    return false
   }
+
+  return true
 }
 
-export { filterImage, registerLoginWithGoogleAction }
+export { filterImage, checkAuth }

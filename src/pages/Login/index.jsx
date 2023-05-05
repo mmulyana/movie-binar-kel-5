@@ -64,7 +64,7 @@ export default function Login() {
       const { token } = response.data.data
 
       localStorage.setItem('token', token)
-      toast.success('Your account has been created successfully!')
+      toast.success('Welcome back!')
 
       navigate('/')
     } catch (error) {
@@ -86,7 +86,7 @@ export default function Login() {
             marginBottom: '20px',
           }}
         >
-          Welcome back
+          Sign In
         </h1>
 
         <GoogleLogin>
