@@ -11,19 +11,21 @@ import Review from '../../components/Review'
 import Card from '../../components/Card'
 import { useEffect, useState } from 'react'
 import { checkAuth, filterImage } from '../../utils'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchMovieDetail,
+  fetchRecomendation,
+  fetchReview,
+  removeMovie,
+} from '../../redux/reducers/moviesReducer'
 
 export default function Detail() {
-  const { id } = useParams()
-  const { data, loading } = useFetch(getRequestURL('detail', id))
-  const { data: dataReview } = useFetch(getRequestURL('review', id))
-  const { data: dataRecommendations } = useFetch(
-    getRequestURL('recommendations', id),
-  )
-
-  const navigate = useNavigate()
-
-  const [video, setVideo] = useState(null)
+  const { detail: data, reviews: dataReview, recomendation: dataRecommendations } = useSelector((s) => s.movies)
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const [video, setVideo] = useState(null)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { id } = useParams()
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
@@ -34,6 +36,14 @@ export default function Detail() {
       navigate('/login', { replace: true })
     }
   }, [])
+
+  useEffect(() => {
+    dispatch(fetchMovieDetail(id))
+    dispatch(fetchRecomendation(id))
+    dispatch(fetchReview(id))
+
+    return () => dispatch(removeMovie())
+  }, [id])
 
   async function getMovieVideo() {
     const res = await fetch(getRequestURL('videos', id))
@@ -109,13 +119,13 @@ export default function Detail() {
         <div className={styles.container}>
           <p className={styles.titleContainer}>Review of {data?.title}</p>
           <div className={styles.reviewWrapper}>
-            {dataReview && dataReview.results.length > 0 ? (
-              dataReview.results.length > 10 ? (
-                dataReview.results
+            {dataReview && dataReview.length > 0 ? (
+              dataReview.length > 10 ? (
+                dataReview
                   .slice(0, 5)
                   .map((data, index) => <Review data={data} key={index} />)
               ) : (
-                dataReview.results.map((data, index) => (
+                dataReview.map((data, index) => (
                   <Review data={data} key={index} />
                 ))
               )
@@ -130,10 +140,10 @@ export default function Detail() {
 
         <div className={styles.container}>
           <p className={styles.titleContainer}>Recommendation</p>
-          <div className={styles.movieWrapper}>
+          <div className={styles.moviesWrapper}>
             {dataRecommendations &&
-              dataRecommendations.results
-                .slice(0, 4)
+              dataRecommendations
+                .slice(0, 5)
                 .map((data, index) => <Card key={index} data={data} />)}
           </div>
         </div>

@@ -136,7 +136,7 @@ export default function Navbar({ isLight }) {
           )}
         </MediaQuery>
         <MediaQuery maxWidth={768}>
-          <h1 className={styles.brand}>Movielist</h1>
+          <Link to='/' className={styles.brand}>Movielist</Link>
           <span
             onClick={handleOpenSearch}
             className={
