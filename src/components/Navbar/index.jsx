@@ -48,10 +48,6 @@ export default function Navbar({ isLight }) {
     setIsOpenSearch(!isOpenSearch)
   }
 
-  function handleOpenSearch() {
-    setIsOpenSearch(!isOpenSearch)
-  }
-
   return (
     <div className={offset > 0 ? styles.navWrapperActive : styles.navWrapper}>
       <div className={styles.container}>
@@ -136,19 +132,65 @@ export default function Navbar({ isLight }) {
           )}
         </MediaQuery>
         <MediaQuery maxWidth={768}>
-          <Link to='/' className={styles.brand}>Movielist</Link>
-          <span
-            onClick={handleOpenSearch}
-            className={
-              isLight && offset > 0
-                ? styles.iconDarkActice
-                : isLight
-                ? styles.iconDark
-                : styles.iconLight
-            }
-          >
-            <BsSearch />
-          </span>
+          <Link to='/' className={styles.brand}>
+            Movielist
+          </Link>
+          {isOpenSearch ? (
+            <div
+              style={{
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                width: '100%',
+                padding: '1rem',
+                background: isLight && offset > 0 ? '#18141d' : '#fff' ? '#18141d' : '#fff',
+              }}
+            >
+              <form onSubmit={handleSubmit}>
+                <div className={styles.textfieldGroup} style={{ width: '100%'}}>
+                  <input
+                    className={
+                      isLight && offset > 0
+                        ? styles.textfieldDarkActive
+                        : isLight
+                        ? styles.textfieldDark
+                        : styles.textfield
+                    }
+                    placeholder='What do you want to watch'
+                    ref={searchVal}
+                    onBlur={handleOpenSearch}
+                    autoFocus
+                  />
+                  <span
+                    onClick={handleSubmit}
+                    className={
+                      isLight && offset > 0
+                        ? styles.iconDarkActice
+                        : isLight
+                        ? styles.iconDark
+                        : styles.iconLight
+                    }
+                  >
+                    <BsSearch />
+                  </span>
+                </div>
+                <button type='submit' hidden></button>
+              </form>
+            </div>
+          ) : (
+            <span
+              onClick={handleOpenSearch}
+              className={
+                isLight && offset > 0
+                  ? styles.iconDarkActice
+                  : isLight
+                  ? styles.iconDark
+                  : styles.iconLight
+              }
+            >
+              <BsSearch />
+            </span>
+          )}
         </MediaQuery>
       </div>
     </div>
