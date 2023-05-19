@@ -10,7 +10,7 @@ function filterImage(movie) {
 }
 
 function checkAuth() {
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('TOKEN')
 
   if (token) {
     return false

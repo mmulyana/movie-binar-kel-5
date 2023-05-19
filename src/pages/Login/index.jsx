@@ -9,9 +9,13 @@ import googleIcon from '../../assets/images/google.png'
 
 import styles from './index.module.css'
 import { parseJwt } from '../../utils'
+import { useDispatch } from 'react-redux'
+import { login } from '../../redux/actions/authAction'
 
 export default function Login() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -32,7 +36,7 @@ export default function Login() {
     try {
       await loginSchema.validate(formData, { abortEarly: false })
       setErrors({})
-      handleRegister(formData)
+      handleLogin(formData)
     } catch (errors) {
       // validation failed, display error messages
       const errorMessages = {}
@@ -44,38 +48,14 @@ export default function Login() {
     }
   }
 
-  async function handleRegister(form) {
-    try {
-      const { email, password } = form
-      let data = {
-        email,
-        password,
-      }
-
-      let config = {
-        method: 'post',
-        url: `${import.meta.env.VITE_API_URL}/v1/auth/login`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: data,
-      }
-
-      const response = await axios.request(config)
-      const { token } = response.data.data
-      const { name } = parseJwt(token)
-
-      localStorage.setItem('token', token)
-      toast.success(`Welcome back! ${name}`)
-
-      navigate('/')
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response.data.message)
-        return
-      }
-      toast.error(error.message)
+  async function handleLogin(form) {
+    const { email, password } = form
+    let data = {
+      email,
+      password,
     }
+
+    dispatch(login(data, navigate))
   }
 
   return (
@@ -147,8 +127,14 @@ export default function Login() {
             Sign In
           </button>
         </form>
-        <p style={{textAlign: 'center', marginTop: '8px'}}>
-          Don't have account? <Link style={{textDecoration: 'none', fontWeight: '600'}} to='/register'>Sign Up</Link>
+        <p style={{ textAlign: 'center', marginTop: '8px' }}>
+          Don't have account?{' '}
+          <Link
+            style={{ textDecoration: 'none', fontWeight: '600' }}
+            to='/register'
+          >
+            Sign Up
+          </Link>
         </p>
       </div>
     </AuthLayout>

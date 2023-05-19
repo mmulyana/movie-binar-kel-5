@@ -4,41 +4,14 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { parseJwt } from '../utils'
+import { useDispatch } from 'react-redux'
+import { registerLoginWithGoogle } from '../redux/actions/authAction'
 
 function GoogleLogin({ children }) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const registerLoginWithGoogleAction = async (accessToken) => {
-    try {
-      let data = JSON.stringify({
-        access_token: accessToken,
-      })
-
-      let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: `${import.meta.env.VITE_API_URL}/v1/auth/google`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: data,
-      }
-
-      const response = await axios.request(config)
-      const { token } = response.data.data
-      const { name } = parseJwt(token)
-
-      localStorage.setItem('token', token)
-
-      toast.success(`Welcome! ${name}`)
-
-      navigate('/')
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response.data.message)
-        return
-      }
-      toast.error(error.message)
-    }
+    dispatch(registerLoginWithGoogle(accessToken, navigate))
   }
 
   const loginWithGoogle = useGoogleLogin({
@@ -48,7 +21,7 @@ function GoogleLogin({ children }) {
   })
 
   return (
-    <button style={styleBtn} onClick={() => loginWithGoogle()}>
+    <button style={styleBtn} onClick={loginWithGoogle}>
       {children}
     </button>
   )

@@ -3,14 +3,29 @@ import { Link, useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 import styles from './index.module.css'
 import MediaQuery from 'react-responsive'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMe, logoutAuth } from '../../redux/actions/authAction'
+import { setIsLoggedIn, setToken } from '../../redux/reducers/authReducer'
+import Avvvatars from 'avvvatars-react'
 
 export default function Navbar({ isLight }) {
   const navigate = useNavigate()
   const searchVal = useRef()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const dispatch = useDispatch()
 
   const [offset, setOffset] = useState(0)
   const [isOpenSearch, setIsOpenSearch] = useState(false)
+
+  const { isLoggedIn, user } = useSelector((s) => s.auth)
+
+  useEffect(() => {
+    const token = localStorage.getItem('TOKEN')
+    if (token) {
+      dispatch(setToken(token))
+
+      if (!!dispatch(getMe())) dispatch(setIsLoggedIn(true))
+    }
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setOffset(window.pageYOffset)
@@ -19,17 +34,8 @@ export default function Navbar({ isLight }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    if (token) {
-      setIsAuthenticated(true)
-    }
-  }, [])
-
   function logout() {
-    localStorage.clear('token')
-    navigate('/login')
+    dispatch(logoutAuth(navigate))
   }
 
   function handleSubmit(e) {
@@ -84,19 +90,22 @@ export default function Navbar({ isLight }) {
             </div>
             <button type='submit' hidden></button>
           </form>
-          {isAuthenticated ? (
-            <button
-              style={{
-                height: '40px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              className={styles.btnLogin}
-              onClick={logout}
-            >
-              Logout
-            </button>
+          {isLoggedIn && !!user ? (
+            <div className={styles.rightNav}>
+              <Avvvatars value={user.name} />
+              <button
+                style={{
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                className={styles.btnLogin}
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </div>
           ) : (
             <div className={styles.btnWrapper}>
               <button
