@@ -52,7 +52,6 @@ export const getMe = () => async (dispatch, getState) => {
     const { token } = getState().auth
 
     if (!token) {
-      console.log('token gak ada')
       return
     }
 
