@@ -1,4 +1,4 @@
-import { setIsLoggedIn, setToken, setUser } from '../reducers/authReducers'
+import { setIsLoggedIn, setToken, setUser } from '../reducers/authReducer'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -12,7 +12,7 @@ export const registerLoginWithGoogle =
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: `${process.env.REACT_APP_API}/v1/auth/google`,
+        url: `${import.meta.env.VITE_APP_URL}/v1/auth/google`,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -56,7 +56,7 @@ export const getMe =
       if (!token) return
 
       const response = await axios.get(
-        `${process.env.REACT_APP_API}/v1/auth/me`,
+        `${import.meta.env.VITE_APP_URL}/v1/auth/me`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -92,7 +92,7 @@ export const login = (data, navigate) => async (dispatch) => {
   try {
     let config = {
       method: 'post',
-      url: `${process.env.REACT_APP_API}/v1/auth/login`,
+      url: `${import.meta.env.VITE_APP_URL}/v1/auth/login`,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -120,7 +120,7 @@ export const register = (data, navigate) => async (dispatch) => {
   try {
     let config = {
       method: 'post',
-      url: `${process.env.REACT_APP_API}/v1/auth/register`,
+      url: `${import.meta.env.VITE_APP_URL}/v1/auth/register`,
       headers: {
         'Content-Type': 'application/json',
       },
