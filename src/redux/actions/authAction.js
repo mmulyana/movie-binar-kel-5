@@ -24,7 +24,6 @@ export const registerLoginWithGoogle =
 
       dispatch(setToken(token))
       dispatch(setIsLoggedIn(true))
-      dispatch(getMe(null, null, null))
 
       navigate('/')
     } catch (error) {
@@ -48,45 +47,40 @@ export const logout = (navigate) => (dispatch) => {
   }
 }
 
-export const getMe =
-  (navigate, navigatePath, navigatePathError) => async (dispatch, getState) => {
-    try {
-      const { token } = getState().auth
+export const getMe = () => async (dispatch, getState) => {
+  try {
+    const { token } = getState().auth
 
-      if (!token) return
-
-      const response = await axios.get(
-        `${import.meta.env.VITE_APP_URL}/v1/auth/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-
-      const data = response.data.data
-
-      dispatch(setUser(data))
-
-      // if navigatePath params is false/null/undefined, it will not executed
-      if (navigatePath) navigate(navigatePath)
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // If not valid token
-        if (error.response.status === 401) {
-          dispatch(logout(null))
-
-          // if navigatePathError params is false/null/undefined, it will not executed
-          if (navigatePathError) navigate(navigatePathError)
-          return
-        }
-
-        toast.error(error.response.data.message)
-        return
-      }
-      toast.error(error.message)
+    if (!token) {
+      console.log('token gak ada')
+      return
     }
+
+    const config = {
+      method: 'get',
+      url: `${import.meta.env.VITE_APP_URL}/v1/auth/me`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const response = await axios.request(config)
+    
+    dispatch(setUser(response.data.data))
+    return true
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response.status === 401) {
+        dispatch(logout(null))
+        return false
+      }
+
+      toast.error(error.response.data.message)
+      return false
+    }
+    toast.error(error.message)
   }
+}
 
 export const login = (data, navigate) => async (dispatch) => {
   try {
@@ -104,7 +98,6 @@ export const login = (data, navigate) => async (dispatch) => {
 
     dispatch(setToken(token))
     dispatch(setIsLoggedIn(true))
-    dispatch(getMe(null, null, null))
 
     navigate('/')
   } catch (error) {
@@ -132,7 +125,6 @@ export const register = (data, navigate) => async (dispatch) => {
 
     dispatch(setToken(token))
     dispatch(setIsLoggedIn(true))
-    dispatch(getMe(null, null, null))
 
     navigate('/')
   } catch (error) {

@@ -3,28 +3,36 @@ import { Link, useNavigate } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
 import styles from './index.module.css'
 import MediaQuery from 'react-responsive'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMe } from '../../redux/actions/authAction'
+import { setIsLoggedIn, setToken } from '../../redux/reducers/authReducer'
 
 export default function Navbar({ isLight }) {
   const navigate = useNavigate()
   const searchVal = useRef()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const dispatch = useDispatch()
 
   const [offset, setOffset] = useState(0)
   const [isOpenSearch, setIsOpenSearch] = useState(false)
+
+  const { isLoggedIn, user } = useSelector((s) => s.auth)
+
+  console.log(user)
+
+  useEffect(() => {
+    const token = localStorage.getItem('TOKEN')
+    if (token) {
+      dispatch(setToken(token))
+
+      if (!!dispatch(getMe())) dispatch(setIsLoggedIn(true))
+    }
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setOffset(window.pageYOffset)
     window.removeEventListener('scroll', onScroll)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    if (token) {
-      setIsAuthenticated(true)
-    }
   }, [])
 
   function logout() {
@@ -84,7 +92,7 @@ export default function Navbar({ isLight }) {
             </div>
             <button type='submit' hidden></button>
           </form>
-          {isAuthenticated ? (
+          {isLoggedIn ? (
             <button
               style={{
                 height: '40px',
