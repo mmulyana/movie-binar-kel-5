@@ -4,8 +4,9 @@ import { BsSearch } from 'react-icons/bs'
 import styles from './index.module.css'
 import MediaQuery from 'react-responsive'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMe } from '../../redux/actions/authAction'
+import { getMe, logoutAuth } from '../../redux/actions/authAction'
 import { setIsLoggedIn, setToken } from '../../redux/reducers/authReducer'
+import Avvvatars from 'avvvatars-react'
 
 export default function Navbar({ isLight }) {
   const navigate = useNavigate()
@@ -16,8 +17,6 @@ export default function Navbar({ isLight }) {
   const [isOpenSearch, setIsOpenSearch] = useState(false)
 
   const { isLoggedIn, user } = useSelector((s) => s.auth)
-
-  console.log(user)
 
   useEffect(() => {
     const token = localStorage.getItem('TOKEN')
@@ -36,8 +35,7 @@ export default function Navbar({ isLight }) {
   }, [])
 
   function logout() {
-    localStorage.clear('token')
-    navigate('/login')
+    dispatch(logoutAuth(navigate))
   }
 
   function handleSubmit(e) {
@@ -92,19 +90,22 @@ export default function Navbar({ isLight }) {
             </div>
             <button type='submit' hidden></button>
           </form>
-          {isLoggedIn ? (
-            <button
-              style={{
-                height: '40px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              className={styles.btnLogin}
-              onClick={logout}
-            >
-              Logout
-            </button>
+          {isLoggedIn && !!user ? (
+            <div className={styles.rightNav}>
+              <Avvvatars value={user.name} />
+              <button
+                style={{
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                className={styles.btnLogin}
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </div>
           ) : (
             <div className={styles.btnWrapper}>
               <button

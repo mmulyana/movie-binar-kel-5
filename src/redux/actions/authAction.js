@@ -35,7 +35,7 @@ export const registerLoginWithGoogle =
     }
   }
 
-export const logout = (navigate) => (dispatch) => {
+export const logoutAuth = (navigate) => (dispatch) => {
   try {
     dispatch(setToken(null))
     dispatch(setIsLoggedIn(false))
