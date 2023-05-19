@@ -1,17 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './HomePage.module.css'
-import { BASE_URL_IMAGE, getRequestURL } from '../../utils/requests'
+import { BASE_URL_IMAGE } from '../../utils/requests'
 import { Carousel } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import Skeleton from 'react-loading-skeleton'
 import { BaseLayout } from '../../components'
-import useFetch from '../../hooks/useFetch'
 import Card from '../../components/Card'
+import { fetchMovies, fetchMoviesPopular } from '../../redux/reducers/moviesReducer'
+import { useDispatch, useSelector } from 'react-redux'
 
 function HomePage() {
-  const { data } = useFetch(getRequestURL('upcoming'))
-  const { data: dataPopular } = useFetch(getRequestURL('popular'))
+  const dispatch = useDispatch()
+  const { data, popular } = useSelector((s) => s.movies)
+
+  useEffect(() => {
+    dispatch(fetchMovies())
+    dispatch(fetchMoviesPopular())
+  }, [])
 
   if (!data) {
     return (
@@ -28,7 +34,7 @@ function HomePage() {
   return (
     <BaseLayout>
       <Carousel controls={false} fade style={{ height: '80vh', zIndex: '11' }}>
-        {data.results.slice(0, 3).map((data, index) => (
+        {data.slice(0, 3).map((data, index) => (
           <Carousel.Item key={index} style={{ height: '80vh' }} interval={4500}>
             <img
               className={styles.imageCarousel}
@@ -60,7 +66,7 @@ function HomePage() {
           </Link>
         </div>
         <div className={styles.container}>
-          {data.results.slice(0, 5).map((data, index) => (
+          {data.slice(0, 5).map((data, index) => (
             <Card data={data} key={index} />
           ))}
         </div>
@@ -77,7 +83,7 @@ function HomePage() {
         </div>
 
         <div className={styles.container}>
-          {dataPopular.results.slice(0, 5).map((data, index) => (
+          {popular.slice(0, 5).map((data, index) => (
             <Card data={data} key={index} />
           ))}
         </div>
